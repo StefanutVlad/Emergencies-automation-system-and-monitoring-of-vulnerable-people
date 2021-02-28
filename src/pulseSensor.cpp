@@ -54,9 +54,8 @@ int getPulse()
         BPM = 0;
     }
 
-    // Pulse
-    if (N > 300)
-    { // avoid high frequency noise
+    if (N > 300) // Pulse
+    {            // avoid high frequency noise
         if ((Signal > thresh) && (Pulse == false) && (N > (IBI / 5) * 3))
         {
             word runningTotal = 0; // total of IBI values
