@@ -1,0 +1,28 @@
+{
+  "name": "emergency-system-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "install": "prebuild-install || node-gyp rebuild"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-ws": "^4.0.0",
+    "http": "0.0.1-security",
+    "jstransformer": "^1.0.0",
+    "middlewares": "^0.1.1",
+    "mongoose": "^5.11.15",
+    "pusher": "^5.0.0",
+    "serialport": "^9.0.7",
+    "socket.io": "^4.0.0",
+    "transform": "^1.1.2"
+  }
+}
