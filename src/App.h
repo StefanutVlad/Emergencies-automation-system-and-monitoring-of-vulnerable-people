@@ -1,7 +1,7 @@
 //#include <StringArray.h>
 #include <ESPAsyncWebServer.h>
 
-String requestFormat(String data1, String data2, String data3, String data4, String data5);
+String requestFormat(String , String , String , String , String);
 void connectToWiFi();
 void checkI2C();
 void initMPU6050();

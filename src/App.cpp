@@ -216,10 +216,6 @@ void sendGpsData()
   }
 }
 
-
-
-
-
 void setup()
 {
   pinMode(blinkPin, OUTPUT); // pin that will blink to your heartbeat!
@@ -243,4 +239,5 @@ void loop()
 {
   sendGpsData();
   mpuFallDetection();
+  Serial.println(requestFormat(String(BPM), String(mlx.readObjectTempC()), String(gps.location.lat(), 6), String(gps.location.lng(), 6), checkFall));
 }
