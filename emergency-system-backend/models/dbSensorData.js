@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
 //DB document structure
-const dataSchema = mongoose.Schema({
-  Name: String,
+const sensorsSchema = mongoose.Schema({
+  //Name: String,
   BPM: String,
   Temperature: String,
   Latitude: String,
@@ -10,4 +10,4 @@ const dataSchema = mongoose.Schema({
   Fall: String,
 });
 
-export default mongoose.model("users", dataSchema);
+export default mongoose.model("Datas", sensorsSchema);
