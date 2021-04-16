@@ -128,12 +128,15 @@ function ShowData() {
         (user) =>
           typeof user.Name !== "undefined" && (
             <div>
-              <h1>Name: {user.Name} </h1>
-              <h1>BPM: {user.BPM}</h1>
-              <h1>Temperature: {user.Temperature}</h1>
-              <h1>Latitude: {user.Latitude}</h1>
-              <h1>Longitude: {user.Longitude}</h1>
-              <h1>Fall Detection: {user.Fall}</h1>
+              <h1>Name: {user.username} </h1>
+              <h1>Email: {user.email}</h1>
+              <h1>password: {user.password}</h1>
+              <h1>Role: {user.roles}</h1>
+              <h1>BPM: {user.data.BPM}</h1>
+              <h1>Temperature: {user.data.Temperature}</h1>
+              <h1>Latitude: {user.data.Latitude}</h1>
+              <h1>Longitude: {user.data.Longitude}</h1>
+              <h1>Fall Detection: {user.data.Fall}</h1>
             </div>
           )
       )}

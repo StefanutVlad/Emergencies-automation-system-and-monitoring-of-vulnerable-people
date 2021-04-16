@@ -8,9 +8,8 @@
 import authJwt from "../middlewares/authJwt.js";
 import controller from "../controllers/userController.js";
 
-
-function test2(app) {
-  app.use(function (req, res, next) {
+function userRoutes(router) {
+  router.use((req, res, next) => {
     res.header(
       "Access-Control-Allow-Headers",
       "x-access-token, Origin, Content-Type, Accept"
@@ -18,21 +17,39 @@ function test2(app) {
     next();
   });
 
-  app.get("/api/test/all", controller.allAccess);
+  router.get("/", (req, res) => {
+    res.status(200).send({
+      title: "Tony's Node.js system app",
+      version: "1.0.0",
+    });
+  });
 
-  app.get("/api/test/user", [authJwt.verifyToken], controller.userBoard);
+  //endpoint to download all data from the DB collection
+  router.get("/user/data", (req, res) => {
+    users.find((err, data) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.status(200).send(data); //success status response
+      }
+    });
+  });
 
-  app.get(
+  router.get("/api/test/all", controller.allAccess);
+
+  router.get("/api/test/user", [authJwt.verifyToken], controller.userBoard);
+
+  router.get(
     "/api/test/mod",
     [authJwt.verifyToken, authJwt.isModerator],
     controller.moderatorBoard
   );
 
-  app.get(
+  router.get(
     "/api/test/admin",
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.adminBoard
   );
 }
 
-export default test2;
+export default userRoutes;

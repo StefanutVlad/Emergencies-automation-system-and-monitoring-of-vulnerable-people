@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Router } from "express";
 import mongoose from "mongoose";
 import Cors from "cors";
 import bodyParser from "body-parser";
@@ -11,14 +11,16 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 import dotenv from "dotenv";
 import db from "./models/index.js";
-import test1 from "./routes/authRoutes.js";
-import test2 from "./routes/userRoutes.js";
+import authenticationRoutes from "./routes/authRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 //App config
 dotenv.config();
 //console.log(process.env);
 const app = express();
 
 const server = createServer(app);
+
+const router = Router();
 
 const io = new Server(server, {
   cors: {
@@ -76,33 +78,35 @@ db.mongoose
     process.exit();
   });
 
-// const dbb = mongoose.connection;
+ const dbLive = mongoose.connection;
 
-// dbb.on("error", console.error.bind(console, "Connection Error:"));
+ dbLive.on("error", console.error.bind(console, "Connection Error:"));
 
-// io.sockets.once("connection", (socket) => {
-//   console.log("Socket.io connection established!");
-//   sendData(socket);
-// });
+io.sockets.once("connection", (socket) => {
+  console.log("Socket.io connection established!");
+  sendData(socket);
+});
 
-// function sendData(socket) {
-//   parser.once("data", (data) => {
-//     const dataObj = {
-//       Name: "tone", //NUMELE USERULUI !!!!!!!!
-//       ...JSON.parse(data),
-//     };
+function sendData(socket) {
+  parser.once("data", (data) => {
+    const dataObj = {
+     // username: "user", //NUMELE USERULUI !!!!!!!!
+      ...JSON.parse(data),
+    };
 
-//     //db.collection("users").updateOne({ Name: "tone" }, { $set: dataObj });
+    dbLive
+      .collection("users")
+      .updateOne({ username: "user" }, { $set: { data: dataObj } });
 
-//     //console.log(dataObj);
+    console.log(dataObj);
 
-//     io.emit("message", dataObj);
+    io.emit("message", dataObj);
 
-//     setTimeout(() => {
-//       sendData(socket);
-//     }, 500);
-//   });
-// }
+    setTimeout(() => {
+      sendData(socket);
+    }, 500);
+  });
+}
 
 // db.collection("users").insertOne({
 //   Name: "tone",
@@ -112,36 +116,20 @@ db.mongoose
 //   Longitude: "0a",
 //   Fall: " noooo ",
 // });
-//db.collection("users").deleteMany({});
+//dbb.collection("users").deleteOne({_id: "6079433ab00f9d2128ee8cad"});
 
-test1(app);
-test2(app);
+
 
 //API endpoints -> router
-//app.use("/", router);
+app.use("/", router);
+
+authenticationRoutes(router);
+userRoutes(router);
 // simple route
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome to tone application." });
-});
+
 //could add
 
 server.listen(3004, () => console.log("Server is running on port ${port}"));
-
-// {
-//    "username": "a",
-//    "email": "x",
-//    "password": "a",
-//    "data": [
-//        {
-//         "BPM": "x",
-//         "Temperature": "a",
-//         "Latitude": "a",
-//         "Longitude": "x",
-//         "Fall": " noooo "
-//         }
-//     ],
-//    "roles": [{"name":"user"}]
-// }
 
 function initial() {
   Role.estimatedDocumentCount((err, count) => {

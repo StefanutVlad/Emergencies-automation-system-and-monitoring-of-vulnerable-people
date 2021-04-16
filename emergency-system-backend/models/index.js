@@ -16,3 +16,23 @@ db.role = Role;
 db.ROLES = ["user", "admin", "moderator"];
 
 export default db;
+
+
+// format DB
+
+
+// {
+//    "username": "a",
+//    "email": "x",
+//    "password": "a",
+//    "data": [
+//        {
+//         "BPM": "x",
+//         "Temperature": "a",
+//         "Latitude": "a",
+//         "Longitude": "x",
+//         "Fall": " noooo "
+//         }
+//     ],
+//    "role": [{"name":"user"}]
+// }

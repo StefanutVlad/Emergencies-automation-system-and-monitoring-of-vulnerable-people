@@ -5,8 +5,8 @@
 import verifySignUp from "../middlewares/verifySignUp.js";
 import controller from "../controllers/authController.js";
 
-function test1(app) {
-  app.use(function (req, res, next) {
+function authenticationRoutes(router) {
+  router.use(function (req, res, next) {
     res.header(
       "Access-Control-Allow-Headers",
       "x-access-token, Origin, Content-Type, Accept"
@@ -14,7 +14,20 @@ function test1(app) {
     next();
   });
 
-  app.post(
+  //endpoint to add the data into the DB
+  router.post("/user/data", (req, res) => {
+    const dbData = req.body;
+
+    users.create(dbData, (err, data) => {
+      if (err) {
+        res.status(500).send(err); //internal server error
+      } else {
+        res.status(201).send(data); //data created successfully
+      }
+    });
+  });
+
+  router.post(
     "/api/auth/signup",
     [
       verifySignUp.checkDuplicateUsernameOrEmail,
@@ -23,6 +36,6 @@ function test1(app) {
     controller.signup
   );
 
-  app.post("/api/auth/signin", controller.signin);
+  router.post("/api/auth/signin", controller.signin);
 }
-export default test1;
+export default authenticationRoutes;
