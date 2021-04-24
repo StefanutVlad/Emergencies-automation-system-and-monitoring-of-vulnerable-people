@@ -1,0 +1,94 @@
+body {
+  font-size: 13px;
+  line-height: 19px;
+  color: #0f1111;
+}
+.help_content {
+  //float: center;
+  width: 640px;
+  *width: 600px;
+  padding: 0 20px;
+  margin: 0 151px 0 0;
+  _margin-right: 74px;
+
+  font-size: 14px;
+  line-height: 1.4em;
+
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 14px;
+  padding-bottom: 14px;
+}
+
+p.lead {
+  font-size: 16px;
+  line-height: 1.4em;
+  color: #555;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 14px;
+  padding-bottom: 14px;
+}
+div {
+  display: block;
+}
+
+h2 {
+  font-weight: 700;
+  font-size: 21px;
+  line-height: 1.3;
+}
+h1,
+h2 {
+  padding-bottom: 4px;
+}
+h1,
+h2,
+h3,
+h4 {
+  text-rendering: optimizeLegibility;
+}
+h1,
+h2,
+h3,
+h4 {
+  padding-bottom: 4px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  padding: 0;
+  margin: 0;
+}
+
+p {
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+
+#navFooter.navLeftFooter div.navFooterLine {
+  font-size: 12px;
+}
+#navFooter.navLeftFooter .navFooterLogoLine,
+#navFooter.navLeftFooter .navFooterPadItemLine {
+  text-align: center;
+  max-width: 1000px;
+  margin: 30px auto 15px;
+}
+div.navFooterLogoLine {
+  margin: 30px 8px 4px 8px;
+  font-size: 1px;
+  line-height: 0;
+}
+div.navFooterLine {
+  font-family: inherit;
+  color: #ddd;
+  font-size: 11px;
+  text-align: center;
+  line-height: 18px;
+  white-space: nowrap;
+}

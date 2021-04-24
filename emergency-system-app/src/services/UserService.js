@@ -1,15 +1,29 @@
-//Data service -> metode pentru preluarea datelor de la server.
-//in caz ca accesam resurse protejate , requestul http are nevoie de Authorization header
+// service for accessing data
 
-//helper function -> checks Local Storage for user item. if there is a logged user
-//with accessToken(JWT), return HTTP Authorization header, otherwise: empty object.
-export default function authHeader() {
-  const user = JSON.parse(localStorage.getItem("user"));
+import axios from "axios";
+import authHeader from "./AuthHeader";
 
-  if (user && user.accessToken) {
-    //return { Authorization: "Bearer " + user.accessToken };
-    return { "x-access-token": user.accessToken };
-  } else {
-    return {};
-  }
-}
+const API_URL = "http://localhost:3004/api/test/";
+
+const getPublicContent = () => {
+  return axios.get(API_URL + "all");
+};
+
+const getUserBoard = () => {
+  return axios.get(API_URL + "user", { headers: authHeader() });
+};
+
+const getModeratorBoard = () => {
+  return axios.get(API_URL + "mod", { headers: authHeader() });
+};
+
+const getAdminBoard = () => {
+  return axios.get(API_URL + "admin", { headers: authHeader() });
+};
+
+export default {
+  getPublicContent,
+  getUserBoard,
+  getModeratorBoard,
+  getAdminBoard,
+};

@@ -4,6 +4,7 @@
 
 import verifySignUp from "../middlewares/verifySignUp.js";
 import controller from "../controllers/authController.js";
+import Users from "../models/dbUserData.js";
 
 function authenticationRoutes(router) {
   router.use(function (req, res, next) {
@@ -18,7 +19,7 @@ function authenticationRoutes(router) {
   router.post("/user/data", (req, res) => {
     const dbData = req.body;
 
-    users.create(dbData, (err, data) => {
+    Users.create(dbData, (err, data) => {
       if (err) {
         res.status(500).send(err); //internal server error
       } else {

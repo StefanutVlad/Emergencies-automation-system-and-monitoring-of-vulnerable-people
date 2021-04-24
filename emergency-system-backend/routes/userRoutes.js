@@ -7,6 +7,7 @@
 
 import authJwt from "../middlewares/authJwt.js";
 import controller from "../controllers/userController.js";
+import Users from "../models/dbUserData.js";
 
 function userRoutes(router) {
   router.use((req, res, next) => {
@@ -26,7 +27,7 @@ function userRoutes(router) {
 
   //endpoint to download all data from the DB collection
   router.get("/user/data", (req, res) => {
-    users.find((err, data) => {
+    Users.find((err, data) => {
       if (err) {
         res.status(500).send(err);
       } else {

@@ -78,9 +78,9 @@ db.mongoose
     process.exit();
   });
 
- const dbLive = mongoose.connection;
+const dbLive = mongoose.connection;
 
- dbLive.on("error", console.error.bind(console, "Connection Error:"));
+dbLive.on("error", console.error.bind(console, "Connection Error:"));
 
 io.sockets.once("connection", (socket) => {
   console.log("Socket.io connection established!");
@@ -89,18 +89,27 @@ io.sockets.once("connection", (socket) => {
 
 function sendData(socket) {
   parser.once("data", (data) => {
-    const dataObj = {
-     // username: "user", //NUMELE USERULUI !!!!!!!!
+    const sensorsDataObj = {
+      // username: "user", //NUMELE USERULUI !!!!!!!!
       ...JSON.parse(data),
     };
 
     dbLive
       .collection("users")
-      .updateOne({ username: "user" }, { $set: { data: dataObj } });
+      .updateOne({ username: "user" }, { $set: { data: sensorsDataObj } });
 
-    console.log(dataObj);
+    // NU NU TRIMIT USERU SI EMAILU DE AICI
 
-    io.emit("message", dataObj);
+    //console.log(dbObj);
+    // const dbObj = dbLive
+    //   .collection("users")
+    //   .findOne({ username: "user" }, { _id: 0, password: 0 })
+    //   .then((num) => {
+    //     console.log(num);
+
+    //   });
+    
+    io.emit("message", sensorsDataObj);
 
     setTimeout(() => {
       sendData(socket);
@@ -117,8 +126,6 @@ function sendData(socket) {
 //   Fall: " noooo ",
 // });
 //dbb.collection("users").deleteOne({_id: "6079433ab00f9d2128ee8cad"});
-
-
 
 //API endpoints -> router
 app.use("/", router);

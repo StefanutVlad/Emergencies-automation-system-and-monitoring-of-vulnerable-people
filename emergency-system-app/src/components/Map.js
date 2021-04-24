@@ -7,7 +7,7 @@ import {
   DirectionsRenderer,
   DirectionsService,
 } from "@react-google-maps/api";
-import useGeoLocation from "./useGeoLocation";
+import useGeoLocation from "../useGeoLocation";
 
 //import {formatRelative} from "date-fns";
 
