@@ -9,20 +9,18 @@
     "start": "node server.js",
     "install": "prebuild-install || node-gyp rebuild"
   },
-  "author": "",
+  "author": "Vlad Antonio Stefanut",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "express-ws": "^4.0.0",
     "http": "0.0.1-security",
-    "jstransformer": "^1.0.0",
-    "middlewares": "^0.1.1",
-    "mongoose": "^5.11.15",
-    "pusher": "^5.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.1",
     "serialport": "^9.0.7",
-    "socket.io": "^4.0.0",
-    "transform": "^1.1.2"
+    "socket.io": "^4.0.0"
   }
 }

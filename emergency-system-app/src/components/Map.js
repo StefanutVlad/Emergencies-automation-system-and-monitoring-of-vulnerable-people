@@ -5,32 +5,11 @@ import {
   Marker,
   InfoWindow,
   DirectionsRenderer,
-  DirectionsService,
+  //DirectionsService,
 } from "@react-google-maps/api";
-import useGeoLocation from "./useGeoLocation";
+import useGeoLocation from "../useGeoLocation";
 
 //import {formatRelative} from "date-fns";
-
-const mapContainerStyle = {
-  //map container props to avoid rerenders
-  width: "75vw",
-  height: "30vh",
-};
-const centerr = {
-  //default romania
-  lat: 45.9433,
-  lng: 24.9662,
-};
-
-const hospitalCoordinates = {
-  lat: 46.765651,
-  lng: 23.583325,
-};
-const options = {
-  //disable map controls
-  disableDefaultUI: true,
-  zoomControl: true,
-};
 
 function Map(props) {
   //hooks
@@ -38,12 +17,15 @@ function Map(props) {
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     //librarii google places search??
   });
-  const [mapRef, setMapRef] = useState(null);
+  //const [mapRef, setMapRef] = useState(null);
+  const mapRef = useRef();
+  const onMapLoad = useCallback((map) => {
+    mapRef.current = map;
+  }, []);
   const [id, setId] = useState(0);
   const [markers, setMarkers] = useState({});
 
   const location = useGeoLocation();
-  const [bound, setBound] = useState({}); //NUUUUU
 
   let [dir, setDir] = useState();
 
@@ -56,17 +38,54 @@ function Map(props) {
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [zoom, setZoom] = useState(8);
 
+  const mapContainerStyle = {
+    //map container props to avoid rerenders
+    width: "75vw",
+    height: "30vh",
+  };
+
+  const romaniaCoords = {
+    //default romania
+    lat: 45.9433,
+    lng: 24.9662,
+  };
+  const [centerr, setCenter] = useState(romaniaCoords);
+
+  const hospitalCoordinates = {
+    lat: 46.765651,
+    lng: 23.583325,
+  };
+  const options = {
+    //disable map controls
+    disableDefaultUI: true,
+    zoomControl: true,
+  };
+
   const places = [
+    //ambulance info
     {
-      id: "loc1",
+      id: "Location 1",
+      info: "Departing place of Emergency medical staff",
       pos: {
         lat: hospitalCoordinates.lat + 0.0002,
         lng: hospitalCoordinates.lng + 0.000075,
       },
       url: "http://maps.google.com/mapfiles/ms/micons/blue.png",
-    }, //ambulanta
+    },
+    //patient info
     {
-      id: "loc2",
+      id: "Location 2",
+      info: "Patient place",
+      pos: {
+        lat: location.coordinates.lat,
+        lng: location.coordinates.lng,
+      },
+      url: "http://maps.google.com/mapfiles/ms/micons/green.png",
+    },
+    //location info
+    {
+      id: "Location 3",
+      info: "Arriving at the hospital place",
       pos: {
         lat: hospitalCoordinates.lat + 0.0000495,
         lng: hospitalCoordinates.lng + 0.000164,
@@ -74,65 +93,79 @@ function Map(props) {
 
       url: "/hospitalMarker.png",
     },
-    {
-      id: "loc3",
-      pos: {
-        lat: location.coordinates.lat,
-        lng: location.coordinates.lng,
-      },
-      url: "http://maps.google.com/mapfiles/ms/micons/green.png",
-    },
   ];
   // Iterate myPlaces to size, center, and zoom map to contain all markers
   const fitBounds = (map) => {
+    //map.fitBounds(bounds);
     const bounds = new window.google.maps.LatLngBounds();
+    console.log(bounds);
     places.map((place) => {
       bounds.extend(place.pos);
       return place.id;
     });
+    bounds.extend(places);
+
     map.fitBounds(bounds);
   };
+
   const loadHandler = (map) => {
     // Store a reference to the google map instance in state
-    setMapRef(map);
+    //setMapRef(map);
     // Fit map bounds to contain all markers
-    fitBounds(map);
+    //fitBounds(map);
+    //loadHandler(bounds);
   };
-  // We have to create a mapping of our places to actual Marker objects
+
+  const unmountHandler = (map) => {
+    // Store a reference to the google map instance in state
+    //setMapRef(map);
+    // // Fit map bounds to contain all markers
+    //fitBounds(centerr);
+  };
+
   const markerLoadHandler = (marker, place) => {
+    // Create a mapping of our places to actual Marker objects
     return setMarkers((prevState) => {
       return { ...prevState, [place.id]: marker };
     });
   };
 
   const markerClickHandler = (event, place) => {
-    // Remember which place was clicked
+    // set the place state
     setSelectedPlace(place);
 
-    // Required so clicking a 2nd marker works as expected
+    // Required so clicking a 2nd marker works as expected. not allowed to have 2 info windows opened
     if (infoOpen) {
       setInfoOpen(false);
     }
 
+    //open info window
     setInfoOpen(true);
 
-    // If you want to zoom in a little on marker click
+    // zoom in on marker click
     if (zoom < 13) {
-      setZoom(13);
+      setZoom(16);
     }
 
-    // if you want to center the selected Marker
-    //setCenter(place.pos)
+    // center the selected Marker
+    setCenter(place.pos);
   };
 
   useEffect(() => {
-    if (distance && duration) {
-      console.log("Distance & Duration have updated", distance, duration);
+    let mounted = true;
+    if (mounted) {
+      if (distance && duration) {
+        console.log("Distance & Duration have updated", distance, duration);
+      }
     }
+
+    return () => (mounted = false);
   }, [distance, duration]);
 
   const onDirClick = useCallback(
     function callback(map) {
+      let mounted = true;
+
       const directionsRenderer = new window.google.maps.DirectionsRenderer();
       const directionsService = new window.google.maps.DirectionsService();
       const directionsRequest = {
@@ -156,31 +189,34 @@ function Map(props) {
         optimizeWaypoints: true,
       };
 
-      directionsRenderer.setMap(null);
-      //
-      directionsService.route(directionsRequest, (response, status) => {
-        if (status === window.google.maps.DirectionsStatus.OK) {
-          directionsRenderer.setDirections(response);
+      if (mounted) {
+        directionsRenderer.setMap(null);
+        //
+        directionsService.route(directionsRequest, (response, status) => {
+          if (status === window.google.maps.DirectionsStatus.OK) {
+            directionsRenderer.setDirections(response);
 
-          var leg = response.routes[0].legs[0];
-          setDir(response);
+            var leg = response.routes[0].legs[0];
+            setDir(response);
 
-          // save the path to state
-          setDistance(leg.distance.value);
-          setDuration(leg.duration.value);
-          console.log("coords: " + status + " setdirections: " + response);
-        } else {
-          console.log(
-            "Directions request failed. Status: " +
-              status +
-              " Response: " +
-              response
-          );
+            // save the path to state
+            setDistance(leg.distance.value);
+            setDuration(leg.duration.value);
+            console.log("coords: " + status + " setdirections: " + response);
+          } else {
+            console.log(
+              "Directions request failed. Status: " +
+                status +
+                " Response: " +
+                response
+            );
 
-          //delete route from map
-          directionsRenderer.setDirections({ routes: [] });
-        }
-      });
+            //delete route from map
+            directionsRenderer.setDirections({ routes: [] });
+          }
+        });
+      }
+      return () => (mounted = false);
     },
     [location.coordinates.lat, location.coordinates.lng]
   );
@@ -191,16 +227,18 @@ function Map(props) {
   return (
     <div>
       <GoogleMap
-        onLoad={loadHandler}
+        onLoad={onMapLoad}
         mapContainerStyle={mapContainerStyle}
         zoom={zoom}
-        center={{
-          lat: location.coordinates.lat,
-          lng: location.coordinates.lng,
-        }}
-        events={{ onBoundsChangerd: (arg) => setBound(arg) }}
+        // center={{
+        //   lat: location.coordinates.lat,
+        //   lng: location.coordinates.lng,
+        // }}
+        center={centerr}
+        //events={{ onBoundsChangerd: (arg) => setBound(arg) }}
         //onCenterChanged={() => setCenter(mapRef.getCenter().toJSON())}
         options={options}
+        // onUnmount={unmountHandler}
       >
         {toggle &&
           places.map((place) => (
@@ -212,6 +250,8 @@ function Map(props) {
               icon={{
                 url: place.url,
                 scaledSize: new window.google.maps.Size(40, 40),
+                //origin: new window.google.maps.Point(0, 0),
+                //anchor: new window.google.maps.Point(15, 30),
               }}
             />
           ))}
@@ -236,7 +276,10 @@ function Map(props) {
           >
             <div>
               <h3>{selectedPlace.id}</h3>
-              <div>This is your info window content</div>
+              <div>{selectedPlace.info}</div>
+              <div>
+                Coordinates: ({selectedPlace.pos.lat}, {selectedPlace.pos.lng})
+              </div>
             </div>
           </InfoWindow>
         )}
@@ -264,6 +307,8 @@ function Map(props) {
         type="button"
         onClick={() => {
           setToggle(!toggle);
+          setCenter(romaniaCoords);
+          setZoom(7);
           setMarkers({});
           setId((id) => (id = 0));
           setDir({ routes: [] });
