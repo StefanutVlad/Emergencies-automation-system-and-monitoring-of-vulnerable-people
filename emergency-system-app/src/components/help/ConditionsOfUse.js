@@ -11,27 +11,27 @@ function ConditionsOfUse() {
 
       <p>
         <strong>
-          Please read these conditions carefully before using Amazon Services.
-          By using Amazon Services, you signify your agreement to be bound by
-          these conditions.
+          Please read these conditions carefully before using Emergency System
+          Services. By using Emergency System Services, you signify your
+          agreement to be bound by these conditions.
         </strong>
-        We offer a wide range of Amazon Services, and sometimes additional terms
-        may apply. When you use an Amazon Service (for example Your Profile,
-        Gift Cards or Amazon applications for mobile), you will also be subject
-        to the terms, guidelines and conditions applicable to that Amazon
-        Service ("Service Terms"). If these Conditions of Use are inconsistent
-        with the Service Terms, those Service Terms will control.
+        We offer a wide range of Emergency System Services, and sometimes
+        additional terms may apply. When you use an Emergency System Service
+        (for example Your Profile, Gift Cards or Emergency System applications
+        for mobile), you will also be subject to the terms, guidelines and
+        conditions applicable to that Emergency System Service ("Service
+        Terms"). If these Conditions of Use are inconsistent with the Service
+        Terms, those Service Terms will control.
       </p>
 
       <h2>1. ELECTRONIC COMMUNICATIONS</h2>
       <p>
-        {" "}
-        When you use any Amazon Service or send e-mails to us, you are
+        When you use any Emergency System Service or send e-mails to us, you are
         communicating with us electronically. We will communicate with you
         electronically in a variety of ways, such as by e-mail, text, in-app
         push notices or by posting e-mail messages or communications on the
-        website or through the other Amazon Services, such as our Message
-        Centre. For contractual purposes, you agree that all agreements,
+        website or through the other Emergency System Services, such as our
+        Message Centre. For contractual purposes, you agree that all agreements,
         notices, disclosures and other communications that we provide you
         electronically satisfy any legal requirement that such communications be
         in writing, unless mandatory applicable laws specifically require a
@@ -40,33 +40,34 @@ function ConditionsOfUse() {
 
       <h2>2. RECOMMENDATIONS AND PERSONALISATION</h2>
       <p>
-        {" "}
-        As part of the Amazon Services, we will recommend features, products,
-        and services, including third part ads that might be of interest to you,
-        identify your preferences, and personalise your experience.
+        As part of the Emergency System Services, we will recommend features,
+        products, and services, including third part ads that might be of
+        interest to you, identify your preferences, and personalise your
+        experience.
       </p>
 
       <h2>3. COPYRIGHT, AUTHORS' RIGHTS AND DATABASE RIGHTS</h2>
       <p>
-        All content included in or made available through any Amazon Service,
-        such as text, graphics, logos, button icons, images, audio clips,
-        digital downloads and data compilations is the property of Amazon or its
-        content suppliers and is protected by Luxembourg and international
-        copyright, authors' rights and database right laws. The compilation of
-        all content included in or made available through any Amazon Service is
-        the exclusive property of Amazon and is protected by Luxembourg and
-        international copyright and database right laws.
+        All content included in or made available through any Emergency System
+        Service, such as text, graphics, logos, button icons, images, audio
+        clips, digital downloads and data compilations is the property of
+        Emergency System or its content suppliers and is protected by Luxembourg
+        and international copyright, authors' rights and database right laws.
+        The compilation of all content included in or made available through any
+        Emergency System Service is the exclusive property of Emergency System
+        and is protected by Luxembourg and international copyright and database
+        right laws.
       </p>
       <p>
-        You may not extract and/or re-utilise parts of the content of any Amazon
-        Service without our express written consent. In particular, you may not
-        utilise any data mining, robots, or similar data gathering and
-        extraction tools to extract (whether once or many times) for
-        re-utilisation any substantial parts of the content of any Amazon
-        Service, without our express written consent. You may also not create
-        and/or publish your own database that features substantial parts of any
-        Amazon Service (e.g. our prices and product listings) without our
-        express written consent.
+        You may not extract and/or re-utilise parts of the content of any
+        Emergency System Service without our express written consent. In
+        particular, you may not utilise any data mining, robots, or similar data
+        gathering and extraction tools to extract (whether once or many times)
+        for re-utilisation any substantial parts of the content of any Emergency
+        System Service, without our express written consent. You may also not
+        create and/or publish your own database that features substantial parts
+        of any Emergency System Service (e.g. our prices and product listings)
+        without our express written consent.
       </p>
     </div>
   );

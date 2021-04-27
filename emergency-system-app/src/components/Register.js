@@ -190,18 +190,6 @@ const Register = () => {
                   </div>
                 )}
               </div>
-              <div className="form-group form-check">
-                <Input
-                  name="acceptTerms"
-                  type="checkbox"
-                  id="acceptTerms"
-                  className={"form-check-input"}
-                  onChange={onCheckTerms}
-                />
-                <label for="acceptTerms" className="form-check-label">
-                  Accept Terms & Conditions
-                </label>
-              </div>
 
               <div className="form-group">
                 <button className="btn btn-primary btn-block">Sign Up</button>

@@ -1,16 +1,12 @@
 //Authentication service -> using Axios for HTTP requests and Local Storage for information & JWT
 
 // GENERAL:
-// The service uses Axios for HTTP requests and Local Storage for user information & JWT.
-// It provides following important methods:
-
-// login(): POST {username, password} & save JWT to Local Storage
-// logout(): remove JWT from Local Storage
-// register(): POST {username, email, password}
+// The service uses Axios for HTTP requests and Browser Local Storage for user information & JWT.
 
 import axios from "axios";
 const API_URL = "http://localhost:3004/api/auth/";
 
+// Register method: HTTP POST request to "signup" endpoint
 const register = (username, email, password) => {
   return axios.post(API_URL + "signup", {
     username,
@@ -19,6 +15,7 @@ const register = (username, email, password) => {
   });
 };
 
+// Login method: HTTP POST request to "signin" endpoint & save JWT to Local Storage using Axios
 const login = (username, password) => {
   return axios
     .post(API_URL + "signin", { username, password })
@@ -31,11 +28,10 @@ const login = (username, password) => {
     });
 };
 
+// Logout method: remove JWT from Local Storage
 const logout = () => {
   localStorage.removeItem("user");
 };
-
-
 
 export default {
   register,

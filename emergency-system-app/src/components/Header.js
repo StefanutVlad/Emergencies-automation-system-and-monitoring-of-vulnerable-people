@@ -10,6 +10,7 @@ import { clearMessage } from "../actions/message";
 import { history } from "../helpers/history";
 
 function Header() {
+  //hooks
   const [showModeratorBoard, setShowModeratorBoard] = useState(false);
   const [showAdminBoard, setShowAdminBoard] = useState(false);
 
@@ -120,7 +121,7 @@ function Header() {
           {currentUser && (
             <li className="nav-item">
               <Link to={"/user"} className="nav-link">
-                User
+                {currentUser.username} Profile
               </Link>
             </li>
           )}
@@ -146,8 +147,6 @@ function Header() {
                 Login
               </Link>
             </li>
-
-            
           </div>
         )}
       </nav>

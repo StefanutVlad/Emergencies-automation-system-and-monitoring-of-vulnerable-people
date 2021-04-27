@@ -90,7 +90,7 @@ io.sockets.once("connection", (socket) => {
 function sendData(socket) {
   parser.once("data", (data) => {
     const sensorsDataObj = {
-      // username: "user", //NUMELE USERULUI !!!!!!!!
+      username: "user", //NUMELE USERULUI !!!!!!!!
       ...JSON.parse(data),
     };
 
@@ -108,7 +108,7 @@ function sendData(socket) {
     //     console.log(num);
 
     //   });
-    
+
     io.emit("message", sensorsDataObj);
 
     setTimeout(() => {

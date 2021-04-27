@@ -48,26 +48,14 @@ const required = (value) => {
 };
 
 const Login = (props) => {
-  //const history = useHistory();
-
-  //const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-
-  //const [showPassword, setShowPassword] = useState(false);
-  //const [isSignup, setIsSignup] = useState(false);
-
-  // const handleShowPassword = () =>
-  //   setShowPassword((prevShowPassword) => !prevShowPassword);
-
-  // const [required, setRequired] = useState(false);
-
+  //hooks
   const form = useRef();
   const checkBtn = useRef();
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
+  //selector???
   const { isLoggedIn } = useSelector((state) => state.AuthReducer);
   const { message } = useSelector((state) => state.MessageReducer);
 
@@ -89,7 +77,7 @@ const Login = (props) => {
     form.current.validateAll();
 
     if (checkBtn.current.context._errors.length === 0) {
-      dispatch(login(username, password))
+      dispatch(login(username, password)) // dispatch login action(auth.js) to Redux Thunk Middleware
         .then(() => {
           props.history.push("/profile");
           window.location.reload();
@@ -148,14 +136,6 @@ const Login = (props) => {
       <div className="login__container">
         <h1>Sign-in</h1>
         <Form onSubmit={handleLogin} ref={form}>
-          {/* <h5>E-mail</h5>
-          <input
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            validations={[required]}
-          /> */}
-
           <div className="form-group">
             <h5 htmlFor="username">Username</h5>
             <Input
@@ -180,13 +160,7 @@ const Login = (props) => {
             />
           </div>
 
-          <button
-            //className="login__signInButton"
-            className="btn btn-primary btn-block"
-            disabled={loading}
-            // onClick={signIn} ????????????????????
-            // type="submit"
-          >
+          <button className="btn btn-primary btn-block" disabled={loading}>
             {loading && (
               <span className="spinner-border spinner-border-sm"></span>
             )}
@@ -203,7 +177,7 @@ const Login = (props) => {
           <CheckButton style={{ display: "none" }} ref={checkBtn} />
         </Form>
 
-        <div class="a-divider a-divider-break">
+        <div className="a-divider a-divider-break">
           <h5>New to Emergency System?</h5>
         </div>
         {/* <button className="login__registerButton"> */}
@@ -226,38 +200,33 @@ const Login = (props) => {
         </p>
       </div>
 
-      <div class="a-section a-spacing-top-extra-large auth-footer">
-        <div class="a-divider a-divider-section">
-          <div class="a-divider-inner"></div>
+      <div className="a-section a-spacing-top-extra-large auth-footer">
+        <div className="a-divider a-divider-section">
+          <div className="a-divider-inner"></div>
         </div>
 
-        <div class="a-section a-spacing-small a-text-center a-size-mini">
-          <span class="auth-footer-seperator"></span>
+        <div className="a-section a-spacing-small a-text-center a-size-mini">
+          <span className="auth-footer-seperator"></span>
 
           <Link to={"/help/user/ConditionsOfUse"} className="register_link">
             Conditions of Use
           </Link>
-          <span class="auth-footer-seperator"></span>
+          <span className="auth-footer-seperator"></span>
 
           <Link to={"/help/user/PrivacyNotice"} className="register_link">
             Privacy Notice
           </Link>
 
-          <span class="auth-footer-seperator"></span>
-
-          <Link to={"/help/user/Help"} className="register_link">
-            Help
-          </Link>
-          <span class="auth-footer-seperator"></span>
+          <span className="auth-footer-seperator"></span>
 
           <Link to={"/help/user/CookiesNotice"} className="register_link">
             Cookies Notice
           </Link>
-          <span class="auth-footer-seperator"></span>
+          <span className="auth-footer-seperator"></span>
         </div>
 
-        <div class="a-section a-spacing-none a-text-center">
-          <span class="a-size-mini a-color-secondary">
+        <div className="a-section a-spacing-none a-text-center">
+          <span className="a-size-mini a-color-secondary">
             © 2021, Emergency System, Inc. or its affiliates
           </span>
         </div>

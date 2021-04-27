@@ -1,4 +1,5 @@
 // service for accessing data
+//uses auth-header() helper function to add JWT to HTTP header.
 
 import axios from "axios";
 import authHeader from "./AuthHeader";

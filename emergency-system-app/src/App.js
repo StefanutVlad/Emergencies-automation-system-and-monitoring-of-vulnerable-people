@@ -47,6 +47,7 @@
 import React, { useState, useEffect } from "react";
 // import { useDispatch, useSelector } from "react-redux";
 import { Router, Switch, Route, Link } from "react-router-dom";
+import { history } from "./helpers/history";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.scss";
@@ -59,18 +60,17 @@ import BoardUser from "./components/BoardUser";
 import BoardModerator from "./components/BoardModerator";
 import BoardAdmin from "./components/BoardAdmin";
 import Header from "./components/Header";
+import ShowData from "./components/ShowData";
+import Map from "./components/Map";
 
 // import { logout } from "./actions/auth";
 // import { clearMessage } from "./actions/message";
 
-import { history } from "./helpers/history";
 import ConditionsOfUse from "./components/help/ConditionsOfUse";
+import PrivacyNotice from "./components/help/PrivacyNotice";
+import CookiesNotice from "./components/help/CookiesNotice";
 
 const App = () => {
-  
-
-  //?????????????????????????
-  //const { currentUser, showModeratorBoard, showAdminBoard } = this.state;
   return (
     <Router history={history}>
       <Header />
@@ -79,13 +79,25 @@ const App = () => {
         <Switch>
           <Route exact path={["/", "/home"]} component={Home} />
           <Route exact path="/login" component={Login} />
+
           <Route exact path="/register" component={Register} />
-          <Route exact path="/profile" component={Profile} />
-          <Route path="/user" component={BoardUser} />
+          <Route path="/profile" component={BoardUser} />
+
+          <Route path="/user" component={Profile}>
+            <ShowData />
+             <Map /> 
+            <br />
+            <h1> LICCC </h1>
+          </Route>
           <Route path="/mod" component={BoardModerator} />
           <Route path="/admin" component={BoardAdmin} />
 
-          <Route path="/help/user/ConditionsOfUse" component={ConditionsOfUse} />
+          <Route
+            path="/help/user/ConditionsOfUse"
+            component={ConditionsOfUse}
+          />
+          <Route path="/help/user/PrivacyNotice" component={PrivacyNotice} />
+          <Route path="/help/user/CookiesNotice" component={CookiesNotice} />
         </Switch>
       </div>
     </Router>

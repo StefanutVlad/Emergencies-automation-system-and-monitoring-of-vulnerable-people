@@ -7,26 +7,25 @@ import React, {
 } from "react";
 import "./ShowData.scss";
 import axios from "../axios";
-//import Pusher from "pusher-js";
-//import WebSocket from "ws";
-//import useWebSocket, { ReadyState } from "react-use-websocket";
-//import { Server, Socket } from "socket.io";
+import { useSelector } from "react-redux";
+
 import io from "socket.io-client";
 
-function ShowData() {
+function ShowData(props) {
   const [sensorsData, setUsersData] = useState([]);
+  const { user: currentUser } = useSelector((state) => state.AuthReducer);
 
   const socket = io.connect("http://localhost:3004");
 
   socket.on("connect", () => {
     if (socket.connected) {
-      //     //console.log("connected to the socket client");
+      console.log("connected to the socket client");
     }
   });
 
   useEffect(() => {
     socket.once("message", (newData) => {
-      console.log(newData);
+      console.log("SensorData: " + newData.Temperature);
       setUsersData([sensorsData, newData]);
     });
   }, [sensorsData, socket]);
@@ -75,13 +74,22 @@ function ShowData() {
   //   setUsersData(jsonData);
   // };
 
-  //React hook
+  // ADMIN BOARD: era  decomentat eventul asta. CE FACE???????????????????????? -> afiseaza intreaga DB -> BUN PT ADMIN BOARD
+  // useEffect(() => {
+  //   let mount = true;
 
-  useEffect(() => {
-    axios.get("/user/data").then((response) => {
-      setUsersData(response.data);
-    });
-  }, []);
+  //   //intreaga db
+  //   axios.get("/user/data").then((response) => {
+  //     if (mount) {
+  //       setUsersData(response.data);
+  //     }
+  //   });
+
+  //   return () => {
+  //     mount = false;
+  //   };
+  // }, []);
+  // ??????????????????????????????????????????
 
   // useEffect(() => {
   //   async function fetchData() {
@@ -124,21 +132,60 @@ function ShowData() {
 
   return (
     <div className="xxxx">
+      {/* senzorii sunt setati pe user */}
       {sensorsData.map(
-        (user) =>
-          //typeof user.username !== "undefined" && (
-            <div>
+        (user, i) =>
+          currentUser.roles == "ROLE_USER" &&
+          user.username && (
+            <div key={i}>
               <h1>Name: {user.username} </h1>
-              <h1>Email: {user.email}</h1>
-              <h1>password: {user.password}</h1>
-              <h1>Role: {user.roles}</h1>
+              {/* <h1>Email: {currentUser.email}</h1>
+          <h1>password: {currentUser.password}</h1> */}
+              <h1>Role: {currentUser.roles}</h1>
               <h1>BPM: {user.BPM}</h1>
               <h1>Temperature: {user.Temperature}</h1>
               <h1>Latitude: {user.Latitude}</h1>
               <h1>Longitude: {user.Longitude}</h1>
               <h1>Fall Detection: {user.Fall}</h1>
+              <br />
             </div>
-          //)
+          )
+      )}
+      {/* // !!!!!!!!!!   II BUN !!! */}
+      {/* {currentUser && currentUser.roles == "ROLE_USER" && (
+        <div>
+          <h1>AAAAAName: {currentUser.username} </h1>
+          <h1>Email: {currentUser.email}</h1>
+          <h1>password: {currentUser.password}</h1>
+          <h1>Role: {currentUser.roles}</h1>
+          <h1>BPM: {currentUser.BPM}</h1>
+          <h1>Temperature: {currentUser.Temperature}</h1>
+          <h1>Latitude: {currentUser.Latitude}</h1>
+          <h1>Longitude: {currentUser.Longitude}</h1>
+          <h1>Fall Detection: {currentUser.Fall}</h1>
+        </div>
+      )} */}
+
+      {/* TOATE DATELE DIN DB PT 443: USER ; 444: admin*/}
+
+      {/* Daca suntem admin, ii afisam pe toti*/}
+      {/* // TRELLLLLLOOOO aici ar trebui sa folosesc locatia din browser pt gps */}
+      {sensorsData.map(
+        (user, i) =>
+          currentUser.roles == "ROLE_ADMIN" &&
+          user.username && (
+            <div key={i}>
+              <h1>Name: {currentUser.username} </h1>
+              <h1>Email: {currentUser.email}</h1>
+              <h1>Role: {currentUser.roles}</h1>
+              <h1>BPM: {currentUser.BPM}</h1>
+              <h1>Temperature: {currentUser.Temperature}</h1>
+              <h1>Latitude: {currentUser.Latitude}</h1>
+              <h1>Longitude: {currentUser.Longitude}</h1>
+              <h1>Fall Detection: {currentUser.Fall}</h1>
+              <br />
+            </div>
+          )
       )}
       <br />
       <br />

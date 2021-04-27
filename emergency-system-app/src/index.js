@@ -12,7 +12,6 @@ import * as serviceWorker from "./serviceWorker";
 ReactDOM.render(
   /* Wrapper to prepare for async rendering */
 
-
   // <React.StrictMode>
   //   <StateProvider initialState={initialState} reducer={reducer}>
   //     <App />
@@ -20,10 +19,9 @@ ReactDOM.render(
   // </React.StrictMode>,
 
   
-    <Provider store={store}>
-      <App />
-    </Provider>
- ,
+  <Provider store={store}>
+    <App />
+  </Provider>,
   document.getElementById("root")
 );
 

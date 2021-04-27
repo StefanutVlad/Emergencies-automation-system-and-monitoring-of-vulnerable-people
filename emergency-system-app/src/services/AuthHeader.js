@@ -9,6 +9,7 @@ export default function authHeader() {
   //checks Local Storage for user item. If there is a logged in user with accessToken (JWT),
   // return HTTP Authorization header. Otherwise, return an empty object.
   if (user && user.accessToken) {
+    //returns an object containing the JWT of the currently logged in user from Local Storage.
     return { "x-access-token": user.accessToken };
   } else {
     return {};
