@@ -1,18 +1,23 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+
 //import { Redirect } from "react-router-dom";
 // import { useSelector } from "react-redux";
+import io from "socket.io-client";
+import ShowData from "./ShowData";
+import Map from "./Map";
+import "./Profile.scss";
 
-function Profile() {
-  // const { user: currentUser } = useSelector((state) => state.AuthReducer);
-
-  // if (!currentUser) {
-  //   return <Redirect to="/login" />;
-  // }
-
+const Profile = ({ sensorsData }) => {
   return (
-    <div className="container">
-      <header className="jumbotron">
-        {/* <h3>
+    <div className="container-profile">
+      <h1>Your data</h1>
+      <header>
+        {/* <h1>aaa</h1> */}
+
+        <ShowData sensorsData={sensorsData} className="sensor-data" />
+
+        <Map sensorsData={sensorsData} className="google-map" />
+        {/* <h3>  
           <strong>{currentUser.username}</strong> Profile
         </h3> */}
       </header>
@@ -33,6 +38,6 @@ function Profile() {
       </ul> */}
     </div>
   );
-}
+};
 
 export default Profile;

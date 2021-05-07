@@ -22,7 +22,6 @@ void ledFadeToBeat()
     fadeRate -= 15;                         //  set LED fade value
     fadeRate = constrain(fadeRate, 0, 255); //  keep LED fade value from going into negative numbers
 }
-//void ledFadeToBeat();
 
 int getPulse()
 {
@@ -54,8 +53,9 @@ int getPulse()
         BPM = 0;
     }
 
-    if (N > 300) // Pulse
-    {            // avoid high frequency noise
+    // Pulse
+    if (N > 300)
+    { // avoid high frequency noise
         if ((Signal > thresh) && (Pulse == false) && (N > (IBI / 5) * 3))
         {
             word runningTotal = 0; // total of IBI values
@@ -127,7 +127,13 @@ int getPulse()
         ledFadeToBeat();
         return BPM;
     }
+    else
+    {
+        return 0;
+    }
 }
+
+
 
 void IRAM_ATTR isr()
 {
@@ -138,7 +144,7 @@ void IRAM_ATTR isr()
 }
 
 void interruptSetup()
-{
+{ // CHECK OUT THE Timer_Interrupt_Notes TAB FOR MORE ON INTERRUPTS
     attachInterrupt(digitalPinToInterrupt(pulsePin), isr, RISING);
     // Serial.println("start timer");
 

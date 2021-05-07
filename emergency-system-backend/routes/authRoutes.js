@@ -28,6 +28,18 @@ function authenticationRoutes(router) {
     });
   });
 
+  router.post("/aa", (req, res) => {
+    const dbData = req.body;
+
+    Users.create(dbData, (err, data) => {
+      if (err) {
+        res.status(500).send(err); //internal server error
+      } else {
+        res.status(201).send(data); //data created successfully
+      }
+    });
+  });
+
   router.post(
     "/api/auth/signup",
     [

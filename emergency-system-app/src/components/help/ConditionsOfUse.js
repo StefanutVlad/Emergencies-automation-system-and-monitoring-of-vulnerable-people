@@ -17,11 +17,11 @@ function ConditionsOfUse() {
         </strong>
         We offer a wide range of Emergency System Services, and sometimes
         additional terms may apply. When you use an Emergency System Service
-        (for example Your Profile, Gift Cards or Emergency System applications
-        for mobile), you will also be subject to the terms, guidelines and
-        conditions applicable to that Emergency System Service ("Service
-        Terms"). If these Conditions of Use are inconsistent with the Service
-        Terms, those Service Terms will control.
+        (for example Your Profile or Emergency System applications for mobile),
+        you will also be subject to the terms, guidelines and conditions
+        applicable to that Emergency System Service ("Service Terms"). If these
+        Conditions of Use are inconsistent with the Service Terms, those Service
+        Terms will control.
       </p>
 
       <h2>1. ELECTRONIC COMMUNICATIONS</h2>
@@ -51,12 +51,11 @@ function ConditionsOfUse() {
         All content included in or made available through any Emergency System
         Service, such as text, graphics, logos, button icons, images, audio
         clips, digital downloads and data compilations is the property of
-        Emergency System or its content suppliers and is protected by Luxembourg
-        and international copyright, authors' rights and database right laws.
-        The compilation of all content included in or made available through any
+        Emergency System or its content suppliers and is protected by
+        international copyright, authors' rights and database right laws. The
+        compilation of all content included in or made available through any
         Emergency System Service is the exclusive property of Emergency System
-        and is protected by Luxembourg and international copyright and database
-        right laws.
+        and is protected by international copyright and database right laws.
       </p>
       <p>
         You may not extract and/or re-utilise parts of the content of any
@@ -66,8 +65,7 @@ function ConditionsOfUse() {
         for re-utilisation any substantial parts of the content of any Emergency
         System Service, without our express written consent. You may also not
         create and/or publish your own database that features substantial parts
-        of any Emergency System Service (e.g. our prices and product listings)
-        without our express written consent.
+        of any Emergency System Service without our express written consent.
       </p>
     </div>
   );

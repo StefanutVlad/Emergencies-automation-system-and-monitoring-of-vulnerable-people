@@ -8,27 +8,30 @@ import React, {
 import "./ShowData.scss";
 import axios from "../axios";
 import { useSelector } from "react-redux";
+import useGeoLocation from "../useGeoLocation";
 
 import io from "socket.io-client";
 
-function ShowData(props) {
-  const [sensorsData, setUsersData] = useState([]);
+import "./ShowData.scss";
+
+function ShowData({ sensorsData }) {
+  // const [sensorsData, setUsersData] = useState([]);
   const { user: currentUser } = useSelector((state) => state.AuthReducer);
 
-  const socket = io.connect("http://localhost:3004");
+  // const socket = io.connect("http://localhost:3004");
 
-  socket.on("connect", () => {
-    if (socket.connected) {
-      console.log("connected to the socket client");
-    }
-  });
+  // socket.on("connect", () => {
+  //   if (socket.connected) {
+  //     console.log("connected to the socket client");
+  //   }
+  // });
 
-  useEffect(() => {
-    socket.once("message", (newData) => {
-      console.log("SensorData: " + newData.Temperature);
-      setUsersData([sensorsData, newData]);
-    });
-  }, [sensorsData, socket]);
+  // useEffect(() => {
+  //   socket.once("message", (newData) => {
+  //     console.log("SensorData: " + newData.Temperature);
+  //     setUsersData([sensorsData, newData]);
+  //   });
+  // }, [sensorsData, socket]);
 
   //bbbbbbbbbbbbbbbbbbbbbb
   // //connection opened
@@ -129,28 +132,63 @@ function ShowData(props) {
   //}, [sensorsData]);
 
   //console.log(sensorsData);
+  const location = useGeoLocation();
+  let patientWaypoint = {};
+  function getPatientLocation() {
+    const a = sensorsData.map((user) => user.Latitude).join("");
+    const b = sensorsData.map((user) => user.Longitude).join("");
+    const c = location.coordinates.lat;
+    const d = location.coordinates.lng;
+
+    //console.log(" a: " + a + " b: " + b + " c: " + c + " d: " + d);
+    if (a != 0.0 && b != 0.0) {
+      patientWaypoint = {
+        a,
+        b,
+      };
+    } else {
+      patientWaypoint = {
+        c,
+        d,
+      };
+    }
+    return patientWaypoint;
+  }
+
+  console.log(
+    "Rez A " +
+      Object.values(getPatientLocation())[0] +
+      " Rez B " +
+      Object.values(getPatientLocation())[1]
+  );
 
   return (
     <div className="xxxx">
       {/* senzorii sunt setati pe user */}
-      {sensorsData.map(
-        (user, i) =>
-          currentUser.roles == "ROLE_USER" &&
-          user.username && (
-            <div key={i}>
-              <h1>Name: {user.username} </h1>
-              {/* <h1>Email: {currentUser.email}</h1>
+      {
+        sensorsData.map(
+          (user, i) =>
+            currentUser.roles == "ROLE_USER" &&
+            user.username && (
+              <div key={i}>
+                <h5>Name: {user.username} </h5>
+                {/* <h1>Email: {currentUser.email}</h1>
           <h1>password: {currentUser.password}</h1> */}
-              <h1>Role: {currentUser.roles}</h1>
-              <h1>BPM: {user.BPM}</h1>
-              <h1>Temperature: {user.Temperature}</h1>
-              <h1>Latitude: {user.Latitude}</h1>
-              <h1>Longitude: {user.Longitude}</h1>
-              <h1>Fall Detection: {user.Fall}</h1>
-              <br />
-            </div>
-          )
-      )}
+                <h5>Role: {currentUser.roles}</h5>
+                <h5>BPM: {user.BPM}</h5>
+                <h5>Temperature: {user.Temperature}</h5>
+                <h5>Latitude: {Object.values(getPatientLocation())[0]}</h5>
+                <h5>Longitude: {Object.values(getPatientLocation())[1]}</h5>
+                {/* <h1>Latitude: {user.Latitude}</h1>
+              <h1>Longitude: {user.Longitude}</h1> */}
+                <h5>Fall Detection: {user.Fall}</h5>
+                <br />
+              </div>
+            )
+        )
+        //if admin???
+      }
+
       {/* // !!!!!!!!!!   II BUN !!! */}
       {/* {currentUser && currentUser.roles == "ROLE_USER" && (
         <div>
@@ -165,9 +203,7 @@ function ShowData(props) {
           <h1>Fall Detection: {currentUser.Fall}</h1>
         </div>
       )} */}
-
       {/* TOATE DATELE DIN DB PT 443: USER ; 444: admin*/}
-
       {/* Daca suntem admin, ii afisam pe toti*/}
       {/* // TRELLLLLLOOOO aici ar trebui sa folosesc locatia din browser pt gps */}
       {sensorsData.map(
@@ -175,14 +211,14 @@ function ShowData(props) {
           currentUser.roles == "ROLE_ADMIN" &&
           user.username && (
             <div key={i}>
-              <h1>Name: {currentUser.username} </h1>
-              <h1>Email: {currentUser.email}</h1>
-              <h1>Role: {currentUser.roles}</h1>
-              <h1>BPM: {currentUser.BPM}</h1>
-              <h1>Temperature: {currentUser.Temperature}</h1>
-              <h1>Latitude: {currentUser.Latitude}</h1>
-              <h1>Longitude: {currentUser.Longitude}</h1>
-              <h1>Fall Detection: {currentUser.Fall}</h1>
+              <h5>Name: {currentUser.username} </h5>
+              <h5>Email: {currentUser.email}</h5>
+              <h5>Role: {currentUser.roles}</h5>
+              <h5>BPM: {currentUser.BPM}</h5>
+              <h5>Temperature: {currentUser.Temperature}</h5>
+              <h5>Latitude: {currentUser.Latitude}</h5>
+              <h5>Longitude: {currentUser.Longitude}</h5>
+              <h5>Fall Detection: {currentUser.Fall}</h5>
               <br />
             </div>
           )

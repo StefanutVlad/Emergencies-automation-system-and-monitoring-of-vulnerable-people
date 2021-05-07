@@ -5,7 +5,7 @@ import bodyParser from "body-parser";
 import middlewares from "middlewares";
 import SerialPort from "serialport";
 import ReadLine from "@serialport/parser-readline";
-import Pusher from "pusher";
+//import Pusher from "pusher";
 //import router from "./router.js";
 import { createServer } from "http";
 import { Server } from "socket.io";
@@ -100,7 +100,7 @@ function sendData(socket) {
 
     // NU NU TRIMIT USERU SI EMAILU DE AICI
 
-    //console.log(dbObj);
+    console.log(sensorsDataObj);
     // const dbObj = dbLive
     //   .collection("users")
     //   .findOne({ username: "user" }, { _id: 0, password: 0 })

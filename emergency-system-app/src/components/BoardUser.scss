@@ -1,0 +1,33 @@
+.container-user {
+  background-color: #fff;
+  margin: auto;
+  width: 55%;
+  float: center;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+  line-height: 1.4em;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 14px;
+  padding-bottom: 14px;
+  border-radius: 15px;
+}
+
+h3 {
+  font-size: 30px;
+  padding: 20px 10px 20px 10px;
+}
+
+h4 {
+  padding: 20px 20px 20px 20px;
+}
+.content-user {
+  padding: 20px 40px 20px 40px;
+}
+
+p,
+ul,
+.user-authorities {
+  font-size: 20px;
+}
