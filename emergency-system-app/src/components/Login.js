@@ -56,7 +56,6 @@ const Login = (props) => {
     e.preventDefault(); //event prevents refreshing the page
 
     setLoading(true);
-    let mounted = true;
     form.current.validateAll();
 
     if (checkBtn.current.context._errors.length === 0) {
@@ -83,7 +82,7 @@ const Login = (props) => {
   return (
     <div className="login">
       <div className="login__container">
-        <h1>Sign-in</h1>
+        <h1 className="text-center">Sign-in</h1>
         <Form onSubmit={handleLogin} ref={form}>
           <div className="form-group">
             <h5 htmlFor="username">Username</h5>

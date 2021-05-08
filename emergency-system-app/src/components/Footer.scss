@@ -118,5 +118,154 @@ li {
 }
 
 .footer-text {
+  width: 35vw;
   font-size: 28px;
+  text-align: justify;
+}
+
+.a-footer-section {
+  width: 35vw;
+}
+
+@media (min-width: 270px) {
+  .footer-text {
+    width: 80vw;
+  }
+  .a-footer-section {
+    width: 80vw;
+  }
+  .footer_link {
+    font-size: 8px;
+  }
+  .pe-3 {
+    padding-right: 0.25rem !important;
+  }
+}
+
+@media (min-width: 335px) {
+  .footer-text {
+    width: 80vw;
+  }
+  .a-footer-section {
+    width: 80vw;
+  }
+  .footer_link {
+    font-size: 10px;
+  }
+  .pe-3 {
+    padding-right: 0.25rem !important;
+  }
+}
+
+@media (min-width: 415px) {
+  .footer-text {
+    width: 80vw;
+  }
+  .a-footer-section {
+    width: 80vw;
+  }
+  .footer_link {
+    font-size: 12px;
+  }
+  .pe-3 {
+    padding-right: 0.25rem !important;
+  }
+}
+
+@media (min-width: 507px) {
+  .footer-text {
+    width: 80vw;
+  }
+  .a-footer-section {
+    width: 80vw;
+  }
+  .footer_link {
+    font-size: 14px;
+  }
+  .pe-3 {
+    padding-right: 0.25rem !important;
+  }
+}
+
+@media (min-width: 614px) {
+  .footer-text {
+    width: 60vw;
+  }
+  .a-footer-section {
+    width: 60vw;
+  }
+  .footer_link {
+    font-size: 16px;
+  }
+  .pe-3 {
+    padding-right: 0.5rem !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .footer-text {
+    width: 50vw;
+  }
+  .a-footer-section {
+    width: 50vw;
+  }
+  .footer_link {
+    font-size: 16px;
+  }
+
+  .pe-3 {
+    padding-right: 1rem !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .footer_link {
+    font-size: 20px;
+  }
+  .pe-3 {
+    padding-right: 1rem !important;
+  }
+}
+
+@media (min-width: 1200px) {
+  .footer-text {
+    width: 40vw;
+  }
+  .a-footer-section {
+    width: 40vw;
+  }
+}
+
+.a-size-mini {
+  font-size: 11px !important;
+  line-height: 1.465 !important;
+}
+
+.a-text-center {
+  text-align: center !important;
+}
+
+.a-spacing-small {
+  margin-bottom: 10px !important;
+}
+
+.auth-footer-seperator {
+  display: inline-block;
+  width: 20px;
+}
+
+a,
+a:active,
+a:link,
+a:visited {
+  text-decoration: none;
+  color: #0066c0;
+}
+
+.a-text-center {
+  text-align: center !important;
+}
+
+.a-spacing-none {
+  margin-bottom: 0 !important;
 }

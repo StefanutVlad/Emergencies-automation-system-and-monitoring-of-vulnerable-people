@@ -8,6 +8,7 @@ import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
 import { rregister } from "../actions/auth";
 import "./Register.scss";
+
 const required = (value) => {
   if (!value) {
     return (
@@ -58,7 +59,6 @@ const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [checkPassword, setCheckPassword] = useState("");
-  //  const checkPassword = useRef({});
   const [email, setEmail] = useState("");
   const [successful, setSuccessful] = useState(false);
 
@@ -86,6 +86,7 @@ const Register = () => {
     setTerms(true);
     console.log("terms: " + terms);
   };
+
   const onCheckPassword = (e) => {
     setPassword(e.target.value);
     if (checkPassword !== e.target.value) {
@@ -96,9 +97,10 @@ const Register = () => {
       setIsError(false);
     }
   };
+
   const onCheckConfirmPassword = (e) => {
-    const a = e.target.value;
-    setCheckPassword(a);
+    const checkConfPass = e.target.value;
+    setCheckPassword(checkConfPass);
     if (password !== e.target.value) {
       setIsError(true);
     } else {
@@ -127,7 +129,7 @@ const Register = () => {
   return (
     <div className="login">
       <div className="login__container">
-        <h1>Sign-Up</h1>
+        <h1 className="text-center">Sign-Up</h1>
 
         <Form onSubmit={handleRegister} ref={form}>
           {!successful && (
@@ -215,6 +217,7 @@ const Register = () => {
               </p>
             </div>
           </div>
+          <CheckButton style={{ display: "none" }} ref={checkBtn} />
         </Form>
       </div>
     </div>

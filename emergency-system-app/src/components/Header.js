@@ -36,7 +36,10 @@ const Header = ({ sensorsData }) => {
       <div className="container position-sticky z-index-sticky col-12">
         <nav className="navbar navbar-expand-lg  blur blur-rounded top-0 z-index-fixed shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
           <div className="container-fluid">
-            <Link to={"/"} className="navbar-brand font-weight-bolder ms-sm-3 ">
+            <Link
+              to={"/"}
+              className="text-gradient text-nav-primary font-weight-bolder ms-sm-3 "
+            >
               Emergency system
             </Link>
 

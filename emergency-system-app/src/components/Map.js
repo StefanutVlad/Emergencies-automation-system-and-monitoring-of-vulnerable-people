@@ -7,8 +7,8 @@ import {
   DirectionsRenderer,
 } from "@react-google-maps/api";
 import useGeoLocation from "../useGeoLocation";
-
 import "./Map.scss";
+
 const Map = ({ sensorsData }) => {
   //hooks
   const { isLoaded, loadError } = useLoadScript({
@@ -38,7 +38,7 @@ const Map = ({ sensorsData }) => {
 
   //map container props to avoid rerenders
   const mapContainerStyle = {
-    width: "53vw",
+    width: "100%",
     height: "35vh",
   };
 
@@ -120,35 +120,6 @@ const Map = ({ sensorsData }) => {
       url: "/hospitalMarker.png",
     },
   ];
-
-  // // Iterate myPlaces to size, center, and zoom map to contain all markers
-  // const fitBounds = (map) => {
-  //   //map.fitBounds(bounds);
-  //   const bounds = new window.google.maps.LatLngBounds();
-  //   console.log(bounds);
-  //   places.map((place) => {
-  //     bounds.extend(place.pos);
-  //     return place.id;
-  //   });
-  //   bounds.extend(places);
-
-  //   map.fitBounds(bounds);
-  // };
-
-  // const loadHandler = (map) => {
-  //   // Store a reference to the google map instance in state
-  //   //setMapRef(map);
-  //   // Fit map bounds to contain all markers
-  //   //fitBounds(map);
-  //   //loadHandler(bounds);
-  // };
-
-  // const unmountHandler = (map) => {
-  //   // Store a reference to the google map instance in state
-  //   //setMapRef(map);
-  //   // // Fit map bounds to contain all markers
-  //   //fitBounds(centerr);
-  // };
 
   const markerLoadHandler = (marker, place) => {
     // Create a mapping of our places to actual Marker objects

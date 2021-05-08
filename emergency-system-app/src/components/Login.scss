@@ -24,6 +24,7 @@
   border: 1px solid rgba(83, 77, 77, 0.486);
   padding: 20px;
   margin-top: 60px;
+  box-shadow: 5px 1px 57px 0px rgba(0, 0.2, 0.2, 0.2);
 }
 
 .login__container > h1 {
@@ -186,10 +187,6 @@ a:link,
 a:visited {
   text-decoration: none;
   color: #0066c0;
-}
-
-.a-text-center {
-  text-align: center !important;
 }
 
 .a-spacing-none {

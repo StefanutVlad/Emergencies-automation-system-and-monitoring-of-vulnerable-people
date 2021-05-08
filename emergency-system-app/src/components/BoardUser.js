@@ -33,7 +33,7 @@ const BoardUser = () => {
   return (
     <div className="container-user">
       <header className="">
-        <h3 classname="top">
+        <h3 className="top">
           <strong>{currentUser.username}</strong> {content}
         </h3>
         <h4>

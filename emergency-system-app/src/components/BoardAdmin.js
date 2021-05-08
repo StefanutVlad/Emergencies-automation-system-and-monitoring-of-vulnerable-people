@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Redirect, Link, Router } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import UserService from "../services/UserService";
 import axios from "../axios";
 import UserCard from "./UserCard";
@@ -57,8 +57,6 @@ const BoardAdmin = () => {
                 <Link to={`/${user.username}`} className="linkkk">
                   <UserCard id={i} username={user.username} />
                 </Link>
-
-                {/* <h5>Name: {user.username} </h5> */}
               </div>
             ))}
           </div>

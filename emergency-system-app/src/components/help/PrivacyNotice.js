@@ -1,7 +1,7 @@
 import React from "react";
 import "./PrivacyNotice.scss";
 
-function PrivacyNotice() {
+const PrivacyNotice = () => {
   return (
     <div className="help_content">
       <h1>Privacy Notice</h1>
@@ -60,6 +60,6 @@ function PrivacyNotice() {
       </ul>
     </div>
   );
-}
+};
 
 export default PrivacyNotice;

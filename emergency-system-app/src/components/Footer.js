@@ -63,17 +63,17 @@ const Footer = () => {
               </ul>
             </div>
           </div>
-          <div className="col-md-2 col-sm-6 col-12 mb-4 text-center ">
+          <div className="col-md-1 col-sm-12 col-6 mb-2 text-center ">
             <div>
-              <h6 className="text-white footer-text pr-2">Company</h6>
+              <h6 className="text-white footer-text text-center">Company</h6>
             </div>
 
-            <div className="a-section a-spacing-small a-text-center a-size-mini">
+            <div className="a-footer-section a-spacing-small a-text-center a-size">
               <span className="auth-footer-seperator"></span>
               <div className="mt-2">
                 <Link
                   to={"/help/user/ConditionsOfUse"}
-                  className="text-white register_link pe-3"
+                  className="text-white footer_link pe-3"
                 >
                   Conditions of Use
                 </Link>
@@ -81,7 +81,7 @@ const Footer = () => {
 
                 <Link
                   to={"/help/user/PrivacyNotice"}
-                  className="text-white register_link pe-3"
+                  className="text-white footer_link pe-3"
                 >
                   Privacy Notice
                 </Link>
@@ -90,7 +90,7 @@ const Footer = () => {
 
                 <Link
                   to={"/help/user/CookiesNotice"}
-                  className="text-white register_link pe-3"
+                  className="text-white footer_link pe-3"
                 >
                   Cookies Notice
                 </Link>

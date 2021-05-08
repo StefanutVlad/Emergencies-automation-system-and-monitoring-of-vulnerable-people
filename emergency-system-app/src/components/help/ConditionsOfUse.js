@@ -1,7 +1,7 @@
 import React from "react";
 import "./ConditionsOfUse.scss";
 
-function ConditionsOfUse() {
+const ConditionsOfUse = () => {
   return (
     <div className="help_content">
       <h1>Conditions of Use</h1>
@@ -69,6 +69,6 @@ function ConditionsOfUse() {
       </p>
     </div>
   );
-}
+};
 
 export default ConditionsOfUse;

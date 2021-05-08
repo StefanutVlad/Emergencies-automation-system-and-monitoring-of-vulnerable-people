@@ -17,10 +17,7 @@ db.ROLES = ["user", "admin", "moderator"];
 
 export default db;
 
-
 // format DB
-
-
 // {
 //    "username": "a",
 //    "email": "x",

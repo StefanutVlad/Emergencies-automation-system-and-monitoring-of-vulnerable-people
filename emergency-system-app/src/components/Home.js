@@ -1,20 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import UserService from "../services/UserService";
 import { Link } from "react-router-dom";
 import CountUp from "react-countup";
 import TiltCard from "./TiltCard";
-
 import axios from "../axios";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import "./Home.scss";
 
 const Home = ({ sensorsData }) => {
   //hooks
-  const { user: currentUser } = useSelector((state) => state.AuthReducer);
-
   const [content, setContent] = useState("");
-  const [users, setUsers] = useState([]);
+  const [usersNumber, setUsersNumber] = useState(0);
 
   var dbEntries = 0;
 
@@ -49,7 +45,7 @@ const Home = ({ sensorsData }) => {
   useEffect(() => {
     axios.get("/user/data").then((response) => {
       const allUsers = response.data.length;
-      setUsers(allUsers);
+      setUsersNumber(allUsers);
     });
   }, []);
 
@@ -81,10 +77,7 @@ const Home = ({ sensorsData }) => {
                 <div className="col-md-4 position-relative">
                   <div className="p-3 text-center">
                     <h1 className="text-gradient text-primary">
-                      {/* {sensorsData.map(
-                        (user, i) => user.username && (totalUsers = i)
-                      )} */}
-                      <CountUp id="state2" start={0} end={users}>
+                      <CountUp id="state2" start={0} end={usersNumber}>
                         {({ countUpRef }) => (
                           <div>
                             <span ref={countUpRef} />
@@ -100,8 +93,8 @@ const Home = ({ sensorsData }) => {
                   <hr className="vertical dark" />
                 </div>
 
-                <div class="col-md-4">
-                  <div class="p-3 text-center">
+                <div className="col-md-4">
+                  <div className="p-3 text-center">
                     <h1 className="text-gradient text-primary">
                       {sensorsData.map(
                         (user, i) => user.username && (dbEntries = i)
@@ -115,8 +108,8 @@ const Home = ({ sensorsData }) => {
                         0
                       </CountUp>
                     </h1>
-                    <h5 class="mt-3">Database entries</h5>
-                    <p class="text-sm">
+                    <h5 className="mt-3">Database entries</h5>
+                    <p className="text-sm">
                       Number of user data entries regarding sensors &
                       authentication data
                     </p>

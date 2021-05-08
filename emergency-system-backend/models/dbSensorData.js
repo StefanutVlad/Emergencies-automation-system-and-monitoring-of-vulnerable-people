@@ -1,8 +1,7 @@
 import mongoose from "mongoose";
 
-//DB document structure
+//DB document sensor data structure
 const sensorsSchema = mongoose.Schema({
-  //Name: String,
   BPM: String,
   Temperature: String,
   Latitude: String,

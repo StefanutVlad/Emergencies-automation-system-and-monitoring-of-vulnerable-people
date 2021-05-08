@@ -9,7 +9,7 @@ import authJwt from "../middlewares/authJwt.js";
 import controller from "../controllers/userController.js";
 import Users from "../models/dbUserData.js";
 
-function userRoutes(router) {
+const userRoutes = (router) => {
   router.use((req, res, next) => {
     res.header(
       "Access-Control-Allow-Headers",
@@ -51,6 +51,6 @@ function userRoutes(router) {
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.adminBoard
   );
-}
+};
 
 export default userRoutes;
