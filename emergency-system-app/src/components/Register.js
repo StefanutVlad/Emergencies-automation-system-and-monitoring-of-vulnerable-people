@@ -7,9 +7,7 @@ import CheckButton from "react-validation/build/button";
 
 import { isEmail } from "validator";
 import { rregister } from "../actions/auth";
-import { useForm } from "react-hook-form";
-// import { yupResolver } from "@hookform/resolvers/yup";
-// import * as Yup from "yup";
+//import "./Register.scss";
 
 const required = (value) => {
   if (!value) {
@@ -61,7 +59,6 @@ const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [checkPassword, setCheckPassword] = useState("");
-  //  const checkPassword = useRef({});
   const [email, setEmail] = useState("");
   const [successful, setSuccessful] = useState(false);
 
@@ -89,6 +86,7 @@ const Register = () => {
     setTerms(true);
     console.log("terms: " + terms);
   };
+
   const onCheckPassword = (e) => {
     setPassword(e.target.value);
     if (checkPassword !== e.target.value) {
@@ -99,9 +97,10 @@ const Register = () => {
       setIsError(false);
     }
   };
+
   const onCheckConfirmPassword = (e) => {
-    const a = e.target.value;
-    setCheckPassword(a);
+    const checkConfPass = e.target.value;
+    setCheckPassword(checkConfPass);
     if (password !== e.target.value) {
       setIsError(true);
     } else {
@@ -128,19 +127,15 @@ const Register = () => {
   };
 
   return (
-    <div className="col-md-12">
-      <div className="card card-container">
-        <img
-          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-          alt="profile-img"
-          className="profile-img-card"
-        />
+    <div className="login">
+      <div className="login__container">
+        <h1 className="text-center">Sign-Up</h1>
 
         <Form onSubmit={handleRegister} ref={form}>
           {!successful && (
             <div>
               <div className="form-group">
-                <label htmlFor="username">Username</label>
+                <h5 htmlFor="username">Username</h5>
                 <Input
                   type="text"
                   name="username"
@@ -151,7 +146,7 @@ const Register = () => {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="email">Email</label>
+                <h5 htmlFor="email">Email</h5>
                 <Input
                   type="text"
                   className="form-control"
@@ -162,20 +157,19 @@ const Register = () => {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="password">Password</label>
+                <h5 htmlFor="password">Password</h5>
                 <Input
                   type="password"
                   className="form-control"
                   name="password"
                   value={password}
-                  // ref={cp}
                   placeholder={"At least six characters"}
                   onChange={onCheckPassword}
                   validations={[required, validPassword]}
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="confirmPassword">Re-enter password</label>
+                <h5 htmlFor="confirmPassword">Re-enter password</h5>
                 <Input
                   name="checkPassword"
                   type="password"
@@ -191,12 +185,15 @@ const Register = () => {
                 )}
               </div>
 
-              <div className="form-group">
-                <button className="btn btn-primary btn-block">Sign Up</button>
+              <div className="row d-flex justify-content-center">
+                <div className="row form-group">
+                  <button className="register-sign-up btn btn-primary btn-block ">
+                    Sign Up
+                  </button>
+                </div>
               </div>
             </div>
           )}
-
           {message && (
             <div className="form-group">
               <div
@@ -211,6 +208,19 @@ const Register = () => {
               </div>
             </div>
           )}
+
+          <div className="reg-a-section reg-a-spacing-top-extra-large auth-footer">
+            <div className="reg-a-divider reg-a-divider-section">
+              <div className="reg-a-divider-inner"></div>
+            </div>
+            <div className="a-section a-spacing-small a-text-center a-size-mini">
+              <p className="reg-p">
+                By creating an account you agree to Emergency System's
+                Conditions of Use. Please see our Privacy Notice and our Cookies
+                Notice.
+              </p>
+            </div>
+          </div>
           <CheckButton style={{ display: "none" }} ref={checkBtn} />
         </Form>
       </div>

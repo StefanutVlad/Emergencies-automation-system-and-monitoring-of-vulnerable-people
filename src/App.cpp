@@ -1,9 +1,10 @@
 #include <WiFi.h>
-#include <ESPAsyncWebServer.h>
 #include <Wire.h>
 #include <Adafruit_MLX90614.h>
 #include <TinyGPS++.h>
 #include <HardwareSerial.h>
+#include <ArduinoJson.h>
+#include <HttpClient.h>
 #include <pulseSensor.h>
 
 #define EEPROM_SIZE 128
@@ -14,12 +15,12 @@
 Adafruit_MLX90614 mlx = Adafruit_MLX90614(); //temperature sensor object
 TinyGPSPlus gps;                             //gps object
 HardwareSerial SerialGPS(0);                 // Initializing GPS serial data on UART0
-AsyncWebServer server(80);                   // Create AsyncWebServer object on port
 
 //Pulse sensor variables
 int pulsePin = 33; // Pulse Sensor wire connected to analog pin 33
 int blinkPin = 2;  // pin to blink led at each beat
-int fadeRate = 0;  // used to fade LED on with PWM on blink led
+int fadePin = 2;   // pin to do fancy classy fading blink at each beat
+int fadeRate = 0;  // used to fade LED on with PWM on fadePin
 
 // Volatile Variables, used in the interrupt service routine!
 volatile int BPM = 0;           // raw analog data from sensor updated every 2mS
@@ -33,83 +34,63 @@ const int MPU_addr = 0x68;                                       // I2C address 
 int16_t rawAccX, rawAccY, rawAccZ, rawGyroX, rawGyroY, rawGyroZ; //raw accelerometer and gyroscope values
 float ax = 0, ay = 0, az = 0, gx = 0, gy = 0, gz = 0;            //accelerometer and gyroscope variables for processing the data
 
-String checkFall = " - ";
+boolean checkFall = false;
 uint32_t softTimer;
 
 //WI-FI variables
 
-//const char* WIFI_SSID ="Orange-H37W"; //wifi1 192.168.100.16
-//const char* WIFI_PASS = "wB5D24Fb";
+// const char *WIFI_SSID = "Orange-H37W"; //wifi1 192.168.100.16
+// const char *WIFI_PASS = "wB5D24Fb";
 
 const char *WIFI_SSID = "Caramida"; //wifi2 192.168.1.102
 const char *WIFI_PASS = "28287612";
-
-const char index_html[] PROGMEM = R"rawliteral(
-<!DOCTYPE HTML><html>
-<head>
-  <title>ESP Web Server</title>
-</head>
-<body>
-  <h1> Web Server </h1>
-  <h2> Licenta </h2>
-  <p>
-    <span id="receivedData">  </span>
-  </p>
- </body>
-  <script>
-  setInterval(function ( ) {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        document.getElementById("receivedData").innerHTML = this.responseText;
-      }
-    };
-    xhttp.open("GET", "/receivedData", true);
-    xhttp.send();
-  }, 1000 ) ;
-  </script>
-</html>)rawliteral";
-
-String requestFormat(String data1, String data2, String data3, String data4, String data5);
 
 void connectToWiFi()
 {
   unsigned long startAttemptTime = millis();
 
-  Serial.print("WiFi connecting to ");
-  Serial.println(WIFI_SSID);
+  // Serial.print("WiFi connecting to ");
+  //Serial.println(WIFI_SSID);
 
   WiFi.begin(WIFI_SSID, WIFI_PASS);
 
   while (WiFi.status() != WL_CONNECTED && millis() - startAttemptTime < WIFI_TIMEOUT_MS)
   {
-    Serial.println("WiFi not connected");
+    // Serial.println("WiFi not connected");
     delay(100);
   }
 
   if (WiFi.status() == WL_CONNECTED)
   {
-    Serial.println("WiFi connected");
-    Serial.println(WiFi.localIP());
+    //  Serial.println("WiFi connected");
+    // Serial.println(WiFi.localIP());
   }
-
-  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
-    request->send_P(200, "text/html", index_html);
-  });
-  server.on("/receivedData", HTTP_GET, [](AsyncWebServerRequest *request) {
-    request->send_P(200, "text/plain", requestFormat(String(BPM), String(mlx.readObjectTempC()), String(gps.location.lat(), 6), String(gps.location.lng(), 6), checkFall).c_str());
-  });
-
-  server.begin();
 }
 
-String requestFormat(String data1, String data2, String data3, String data4, String data5)
+// String requestFormat(String data1, String data2, String data3, String data4, String data5)
+// {
+//   return "BPM: " + data1 + " Temp: " + data2 + " Lat: " + data3 + " Long " + data4 + " fall " + data5;
+// }
+
+// send json data
+String sendData(String data1, String data2, String data3, String data4, String data5)
 {
-  return "BPM: " + data1 + " Temp: " + data2 + " Lat: " + data3 + " Long " + data4 + " fall " + data5;
+  String json;
+  StaticJsonBuffer<200> jsonBuffer;
+  JsonObject &root = jsonBuffer.createObject();
+  root["BPM"] = data1;
+  root["Temperature"] = data2;
+  root["Latitude"] = data3;
+  root["Longitude"] = data4;
+  root["Fall"] = data5;
+  root.printTo(json);
+
+  return json;
 }
 
+//funciton to scan the I2C data bus and get the sensors adresses
 void checkI2C()
-{ //funciton to scan the I2C data bus and get the sensors adresses
+{
   byte error, address;
   int nDevices;
   Serial.println("Scanning...");
@@ -148,6 +129,7 @@ void checkI2C()
   }
 }
 
+//initialize MPU6050 sensor
 void initMPU6050()
 {
   Wire.begin();
@@ -172,9 +154,9 @@ void mpu_read()
   rawGyroZ = Wire.read() << 8 | Wire.read(); // 0x47 (GYRO_ZOUT_H) & 0x48 (GYRO_ZOUT_L)
 }
 
-String mpuFallDetection()
+//fall detection function
+boolean mpuFallDetection()
 {
-
   mpu_read(); //set accelerometer domain +-2g => using 14 bits  //set gyroscope domain 250grades/s => 131.07
 
   //accelerometer and gryoscope processed data each for 3 axis
@@ -185,21 +167,35 @@ String mpuFallDetection()
   gy = (rawGyroY - 351) / 131.07;
   gz = (rawGyroZ + 136) / 131.07;
 
-  // calculating Amplitute vactor for 3 axis
-  if (ax >= 1.1)
-  {                       //if acceleration breaks lower threshold
-    softTimer = millis(); //start counter
+  if (checkFall)
+  {
+    checkFall = false;
+
+    //reinitialize & read MPU6050 sensor
+    initMPU6050();
+    mpu_read();
+    ax = (rawAccX - 2050) / 16384.00;
+    ay = (rawAccY - 77) / 16384.00;
+    az = (rawAccZ - 1947) / 16384.00;
+    gx = (rawGyroX + 270) / 131.07;
+    gy = (rawGyroY - 351) / 131.07;
+    gz = (rawGyroZ + 136) / 131.07;
+
     while (millis() - softTimer < 10000)
     {
-      checkFall = "FALL DETECTED"; //FALL DETECTED for 5 seconds
     }
-    checkFall = " - ";
+  }
+  // calculating Amplitute vactor for 3 axis
+  if (ax <= 0.3 && ay <= 0.2)
+  {                       //if acceleration breaks lower threshold  //1.1
+    softTimer = millis(); //start counter
+    checkFall = true;     //FALL DETECTED for 10 seconds
   }
 
   return checkFall;
-  delay(100);
 }
 
+//gps data function
 void sendGpsData()
 {
   if (SerialGPS.available())
@@ -208,36 +204,48 @@ void sendGpsData()
     gps.encode(cIn);
     if (gps.location.isUpdated())
     {
-      Serial.print("Latitude= ");
-      Serial.print(gps.location.lat(), 6);
-      Serial.print(" Longitude= ");
-      Serial.println(gps.location.lng(), 6);
+      //Serial.print("Latitude= ");
+      //Serial.print(gps.location.lat(), 6);
+      //Serial.print(" Longitude= ");
+      //Serial.println(gps.location.lng(), 6);
     }
   }
 }
 
+//setup function
 void setup()
 {
-  pinMode(blinkPin, OUTPUT); // pin that will blink to your heartbeat!
+  //pin that will blink to your heartbeat!
+  pinMode(blinkPin, OUTPUT);
 
+  //serial baudrate
   Serial.begin(9600);
-  SerialGPS.begin(9600, SERIAL_8N1, RXD0, TXD0); //gps baud
+  //gps baudrate
+  SerialGPS.begin(9600, SERIAL_8N1, RXD0, TXD0);
 
-  Serial.println("Serial Tx is on pin: " + String(TX));
-  Serial.println("Serial Rx is on pin: " + String(RX));
+  //Serial.println("Serial Tx is on pin: " + String(TX));
+  //Serial.println("Serial Rx is on pin: " + String(RX));
 
+  //initialize temperature sensor
   mlx.begin();
-  mlx.writeEmissivity(0.98); // set skin emissivity
+  // set temperature sensor's skin emissivity
+  mlx.writeEmissivity(0.98);
 
+  //initialize MPU6050 sensor
   initMPU6050();
   //checkI2C();
   connectToWiFi();
-  interruptSetup(); // sets up to read Pulse Sensor signal every 2mS
+
+  // sets up to read Pulse Sensor signal every 2mS
+  interruptSetup();
 }
 
 void loop()
 {
+  //500ms delay
+  delay(500);
+  //read gps data
   sendGpsData();
-  mpuFallDetection();
-  Serial.println(requestFormat(String(BPM), String(mlx.readObjectTempC()), String(gps.location.lat(), 6), String(gps.location.lng(), 6), checkFall));
+  //display sensors data
+  Serial.println(sendData(String(BPM), String(mlx.readObjectTempC()) + " °C", String(gps.location.lat(), 6), String(gps.location.lng(), 6), String(mpuFallDetection())));
 }

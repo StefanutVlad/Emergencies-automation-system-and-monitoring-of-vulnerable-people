@@ -5,21 +5,18 @@ import bodyParser from "body-parser";
 import middlewares from "middlewares";
 import SerialPort from "serialport";
 import ReadLine from "@serialport/parser-readline";
-import Pusher from "pusher";
-//import router from "./router.js";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import dotenv from "dotenv";
 import db from "./models/index.js";
 import authenticationRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+
 //App config
 dotenv.config();
-//console.log(process.env);
+
 const app = express();
-
 const server = createServer(app);
-
 const router = Router();
 
 const io = new Server(server, {
@@ -37,13 +34,14 @@ app.use(
     origin: "http://localhost:3000",
   })
 );
+
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
-//Listener
 
+//Listener
 const Readline = SerialPort.parsers.Readline;
 const port = new SerialPort("COM5", {
   baudRate: 9600,
@@ -65,8 +63,8 @@ const Role = db.role;
 //DB config - connect to DB
 db.mongoose
   .connect(connection_url, {
-    useNewUrlParser: true, //parameters for smooth connection
-    //useCreateIndex: true,
+    //parameters for smooth connection
+    useNewUrlParser: true,
     useUnifiedTopology: true,
   })
   .then(() => {
@@ -90,24 +88,18 @@ io.sockets.once("connection", (socket) => {
 function sendData(socket) {
   parser.once("data", (data) => {
     const sensorsDataObj = {
-      username: "user", //NUMELE USERULUI !!!!!!!!
+      //user using product
+      username: "user",
       ...JSON.parse(data),
     };
 
+    //update user data with sensor values realtime
     dbLive
       .collection("users")
       .updateOne({ username: "user" }, { $set: { data: sensorsDataObj } });
 
-    // NU NU TRIMIT USERU SI EMAILU DE AICI
-
-    //console.log(dbObj);
-    // const dbObj = dbLive
-    //   .collection("users")
-    //   .findOne({ username: "user" }, { _id: 0, password: 0 })
-    //   .then((num) => {
-    //     console.log(num);
-
-    //   });
+    // sensors data sent with socket
+    console.log(sensorsDataObj);
 
     io.emit("message", sensorsDataObj);
 
@@ -117,28 +109,19 @@ function sendData(socket) {
   });
 }
 
-// db.collection("users").insertOne({
-//   Name: "tone",
-//   BPM: "4",
-//   Temperature: "a",
-//   Latitude: "a",
-//   Longitude: "0a",
-//   Fall: " noooo ",
-// });
+//delete users
 //dbb.collection("users").deleteOne({_id: "6079433ab00f9d2128ee8cad"});
 
 //API endpoints -> router
 app.use("/", router);
-
 authenticationRoutes(router);
 userRoutes(router);
-// simple route
 
-//could add
+//listen
+server.listen(3004, () => console.log("Server is running"));
 
-server.listen(3004, () => console.log("Server is running on port ${port}"));
-
-function initial() {
+//add roles
+const initial = () => {
   Role.estimatedDocumentCount((err, count) => {
     if (!err && count === 0) {
       new Role({
@@ -172,4 +155,4 @@ function initial() {
       });
     }
   });
-}
+};

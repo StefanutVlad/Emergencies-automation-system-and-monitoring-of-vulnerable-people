@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
-//DB document structure
+//DB document Role structure
 const Role = new mongoose.Schema({
-  name: String
+  name: String,
 });
 
 export default mongoose.model("Role", Role);

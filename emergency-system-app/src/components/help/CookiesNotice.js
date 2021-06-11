@@ -1,9 +1,9 @@
 import React from "react";
-import "./CookiesNotice.scss";
+//import "./sass/components/help/ConditionsOfUse.scss";
 
-function CookiesNotice() {
+const CookiesNotice = () => {
   return (
-    <div className="help_content">
+    <div className="help-content-cookies">
       <h1>About Cookies</h1>
       <p className="lead"></p>
       <p>
@@ -34,7 +34,9 @@ function CookiesNotice() {
           </span>
         </li>
         <li>
-          <span className="a-list-item">Keeping track of your sensor data.</span>
+          <span className="a-list-item">
+            Keeping track of your sensor data.
+          </span>
         </li>
         <li>
           <span className="a-list-item">Preventing fraudulent activity.</span>
@@ -45,6 +47,6 @@ function CookiesNotice() {
       </ul>
     </div>
   );
-}
+};
 
 export default CookiesNotice;

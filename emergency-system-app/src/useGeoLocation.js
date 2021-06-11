@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
-function useGeoLocation() {
+//get browser geolocaton
+const useGeoLocation = () => {
   const [location, setLocation] = useState({
     loaded: false,
     coordinates: { lat: "", lng: "" },
@@ -37,6 +38,6 @@ function useGeoLocation() {
   }, []);
 
   return location;
-}
+};
 
 export default useGeoLocation;
