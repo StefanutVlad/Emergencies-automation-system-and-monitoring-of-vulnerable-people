@@ -4,7 +4,7 @@ import { Redirect, Link } from "react-router-dom";
 import UserService from "../services/UserService";
 import axios from "../axios";
 import UserCard from "./UserCard";
-import "./BoardAdmin.scss";
+//import "./BoardAdmin.scss";
 
 const BoardAdmin = () => {
   //hooks

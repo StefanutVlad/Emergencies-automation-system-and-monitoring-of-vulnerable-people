@@ -7,7 +7,7 @@ import {
   DirectionsRenderer,
 } from "@react-google-maps/api";
 import useGeoLocation from "../useGeoLocation";
-import "./Map.scss";
+//import "./Map.scss";
 
 const Map = ({ sensorsData }) => {
   //hooks
@@ -333,7 +333,7 @@ const Map = ({ sensorsData }) => {
           setToggle(!toggle);
           setCenter(romaniaCoords);
           setZoom(7);
-          setMarkers({});
+          setMarkers();
           setId((id) => (id = 0));
           setDir({ routes: [] });
           setPatientDistance((distance) => (distance = 0));

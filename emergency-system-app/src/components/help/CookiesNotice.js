@@ -1,9 +1,9 @@
 import React from "react";
-import "./CookiesNotice.scss";
+//import "./sass/components/help/ConditionsOfUse.scss";
 
 const CookiesNotice = () => {
   return (
-    <div className="help_content">
+    <div className="help-content-cookies">
       <h1>About Cookies</h1>
       <p className="lead"></p>
       <p>

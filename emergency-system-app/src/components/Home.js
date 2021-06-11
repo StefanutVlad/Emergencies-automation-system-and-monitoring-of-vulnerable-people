@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from "react";
 import UserService from "../services/UserService";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import CountUp from "react-countup";
 import TiltCard from "./TiltCard";
 import axios from "../axios";
 import "bootstrap/dist/js/bootstrap.bundle.min";
-import "./Home.scss";
+//import "./Home.scss";
 
 const Home = ({ sensorsData }) => {
   //hooks
   const [content, setContent] = useState("");
   const [usersNumber, setUsersNumber] = useState(0);
+
+  const { isLoggedIn } = useSelector((state) => state.AuthReducer);
+  const { user: currentUser } = useSelector((state) => state.AuthReducer);
 
   var dbEntries = 0;
 
@@ -54,7 +58,7 @@ const Home = ({ sensorsData }) => {
       <section className="pt-3 pb-4" id="count-stats">
         <div className="container">
           <div className="row">
-            <div className="col-lg-9 z-index-2 border-radius-xl mt-n10 mx-auto py-3 blur shadow-blur">
+            <div className="col-lg-9 z-index-2 border-radius-xl mt-n10 mx-auto py-3 blur shadow-blur ">
               <div className="row">
                 <div className="col-md-4 position-relative">
                   <div className="p-3 text-center">
@@ -68,8 +72,8 @@ const Home = ({ sensorsData }) => {
                         0
                       </CountUp>
                     </h1>
-                    <h5 className="mt-3">Electronics used per product</h5>
-                    <p className="text-sm">From microcontroller, to sensors</p>
+                    <h5 className="mt-2">Electronics used per product</h5>
+                    <p className="text-md">1 microcontroler & 4 sensors</p>
                   </div>
                   <hr className="vertical dark" />
                 </div>
@@ -87,13 +91,13 @@ const Home = ({ sensorsData }) => {
                       </CountUp>
                       +
                     </h1>
-                    <h5 className="mt-3">Current Users</h5>
-                    <p className="text-sm">DB users</p>
+                    <h5 className="mt-2">Current Users</h5>
+                    <p className="text-md">MongoDB users</p>
                   </div>
                   <hr className="vertical dark" />
                 </div>
 
-                <div className="col-md-4">
+                <div className="col-md-4 margin-count">
                   <div className="p-3 text-center">
                     <h1 className="text-gradient text-primary">
                       {sensorsData.map(
@@ -108,8 +112,8 @@ const Home = ({ sensorsData }) => {
                         0
                       </CountUp>
                     </h1>
-                    <h5 className="mt-3">Database entries</h5>
-                    <p className="text-sm">
+                    <h5 className="mt-2">Database entries</h5>
+                    <p className="text-md">
                       Number of user data entries regarding sensors &
                       authentication data
                     </p>
@@ -122,11 +126,11 @@ const Home = ({ sensorsData }) => {
       </section>
 
       <section className="my-5 py-5">
-        <div className="containerrr">
-          <div className="row align-items-center">
-            <div className="col-lg-8 ms-auto">
-              <div className="row justify-content-left">
-                <div className="col-md-6">
+        <div className="container-data">
+          <div className="row ">
+            <div className="mobile-container col-lg-8  mt-10">
+              <div className="d-flex justify-content-left">
+                <div className="col-md-5 mt-5">
                   <div className="info">
                     <div className="icon icon-sm">
                       <svg
@@ -186,7 +190,7 @@ const Home = ({ sensorsData }) => {
                     </p>
                   </div>
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-5 mt-5 offset-1">
                   <div className="info">
                     <div className="icon icon-sm">
                       <svg
@@ -240,15 +244,15 @@ const Home = ({ sensorsData }) => {
                     <h5 className="font-weight-bolder mt-3">
                       Responsive interface
                     </h5>
-                    <p className="pe-3">
+                    <p className="pe-5">
                       Clean and easy to use user experience, using high end
                       front-end technologies.
                     </p>
                   </div>
                 </div>
               </div>
-              <div className="row justify-content-left mt-5">
-                <div className="col-md-6 mt-3">
+              <div className="d-flex justify-content-left mt-5">
+                <div className="col-md-5 mt-5">
                   <div className="info">
                     <div className="icon icon-sm">
                       <svg
@@ -307,12 +311,12 @@ const Home = ({ sensorsData }) => {
                     </div>
                     <h5 className="font-weight-bolder mt-3">Save Time</h5>
                     <p className="pe-5">
-                      Help will be dispatched automatically with absolutely no
-                      delay. Start with our Emergency System.
+                      Automatically dispatched help with absolutely no delay.
+                      Start with our Emergency System.
                     </p>
                   </div>
                 </div>
-                <div className="col-md-6 mt-3">
+                <div className="col-md-5 mt-5 offset-1">
                   <div className="info">
                     <div className="icon icon-sm">
                       <svg
@@ -366,9 +370,9 @@ const Home = ({ sensorsData }) => {
                     <h5 className="font-weight-bolder mt-3">
                       Database Security
                     </h5>
-                    <p className="pe-3">
-                      Encrypted & protected database to ensure user protection &
-                      data stability.
+                    <p className="pe-5">
+                      Cloud protected database to ensure user protection & data
+                      stability.
                     </p>
                   </div>
                 </div>
@@ -379,7 +383,7 @@ const Home = ({ sensorsData }) => {
               <div>
                 <div data-tilt data-tilt-scale="1.1">
                   <TiltCard
-                    className="card  card-background card-background-mask-primary tilt"
+                    className="card card-background card-background-mask-primary tilt"
                     options={options}
                   >
                     <div className="full-background"></div>
@@ -439,12 +443,22 @@ const Home = ({ sensorsData }) => {
                       <h2 className="h2-size text-white up mb-0">
                         Feel safe with <br /> Emegency System
                       </h2>
-                      <Link
-                        to={"/register"}
-                        className="text-white btn-card btn-outline-white mt-5 up btn-round"
-                      >
-                        Start with Emergency System
-                      </Link>
+                      {!isLoggedIn ? (
+                        <Link
+                          to={"/register"}
+                          className="text-white btn-card btn-outline-white mt-5 up btn-round"
+                        >
+                          Start with Emergency System
+                        </Link>
+                      ) : (
+                        <Link
+                          to={"/user"}
+                          className="text-white btn-card btn-outline-white mt-5 up btn-round"
+                        >
+                          {" "}
+                          Welcome, {currentUser.username}
+                        </Link>
+                      )}
                     </div>
                   </TiltCard>
                 </div>

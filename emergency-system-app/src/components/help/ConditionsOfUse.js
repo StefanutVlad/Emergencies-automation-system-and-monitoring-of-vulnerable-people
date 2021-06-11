@@ -1,9 +1,9 @@
 import React from "react";
-import "./ConditionsOfUse.scss";
+//import "./sass/components/help/ConditionsOfUse.scss";
 
 const ConditionsOfUse = () => {
   return (
-    <div className="help_content">
+    <div className="help-content-conditions">
       <h1>Conditions of Use</h1>
       <p className="lead"></p>
       <p>Welcome to Emergency System</p>

@@ -1,9 +1,9 @@
 import React from "react";
-import "./PrivacyNotice.scss";
+//import "./PrivacyNotice.scss";
 
 const PrivacyNotice = () => {
   return (
-    <div className="help_content">
+    <div className="help-content-privacy">
       <h1>Privacy Notice</h1>
       <p className="lead"></p>
       <p>
@@ -28,7 +28,7 @@ const PrivacyNotice = () => {
         We collect your personal information in order to provide and continually
         improve our products and services.
       </strong>
-      <ul>
+      <ul className="privacy-ul">
         <li>
           <span className="a-list-item">
             <strong>Information you give us:</strong> we receive and store any

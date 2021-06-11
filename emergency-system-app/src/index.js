@@ -5,7 +5,8 @@ import store from "./store";
 import reportWebVitals from "./reportWebVitals";
 // import { StateProvider } from "./StateProvider";
 // import reducer, { initialState } from "./reducer";
-import "./index.scss";
+
+import "./sass/index.scss";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
@@ -18,7 +19,6 @@ ReactDOM.render(
   //   </StateProvider>
   // </React.StrictMode>,
 
-  
   <Provider store={store}>
     <App />
   </Provider>,

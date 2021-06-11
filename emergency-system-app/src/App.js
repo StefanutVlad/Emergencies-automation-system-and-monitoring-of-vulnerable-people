@@ -4,7 +4,7 @@ import { history } from "./helpers/history";
 import io from "socket.io-client";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.scss";
+//import "./sass/App.scss";
 
 import Login from "./components/Login";
 import Register from "./components/Register";

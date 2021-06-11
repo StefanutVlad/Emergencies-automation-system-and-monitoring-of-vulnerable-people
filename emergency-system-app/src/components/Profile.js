@@ -1,7 +1,7 @@
 import React from "react";
 import ShowData from "./ShowData";
 import Map from "./Map";
-import "./Profile.scss";
+//import "./Profile.scss";
 
 const Profile = ({ sensorsData }) => {
   return (

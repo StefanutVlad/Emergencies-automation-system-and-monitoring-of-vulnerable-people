@@ -21,6 +21,7 @@ int pulsePin = 33; // Pulse Sensor wire connected to analog pin 33
 int blinkPin = 2;  // pin to blink led at each beat
 int fadePin = 2;   // pin to do fancy classy fading blink at each beat
 int fadeRate = 0;  // used to fade LED on with PWM on fadePin
+
 // Volatile Variables, used in the interrupt service routine!
 volatile int BPM = 0;           // raw analog data from sensor updated every 2mS
 volatile int Signal;            // holds the incoming raw data
@@ -38,11 +39,11 @@ uint32_t softTimer;
 
 //WI-FI variables
 
-const char *WIFI_SSID = "Orange-H37W"; //wifi1 192.168.100.16
-const char *WIFI_PASS = "wB5D24Fb";
+// const char *WIFI_SSID = "Orange-H37W"; //wifi1 192.168.100.16
+// const char *WIFI_PASS = "wB5D24Fb";
 
-//const char* WIFI_SSID ="Caramida"; //wifi2 192.168.1.102
-//const char* WIFI_PASS = "28287612";
+const char *WIFI_SSID = "Caramida"; //wifi2 192.168.1.102
+const char *WIFI_PASS = "28287612";
 
 void connectToWiFi()
 {
@@ -66,14 +67,14 @@ void connectToWiFi()
   }
 }
 
-String requestFormat(String data1, String data2, String data3, String data4, String data5)
-{
-  return "BPM: " + data1 + " Temp: " + data2 + " Lat: " + data3 + " Long " + data4 + " fall " + data5;
-}
+// String requestFormat(String data1, String data2, String data3, String data4, String data5)
+// {
+//   return "BPM: " + data1 + " Temp: " + data2 + " Lat: " + data3 + " Long " + data4 + " fall " + data5;
+// }
 
-String postt(String data1, String data2, String data3, String data4, String data5)
-{ // send json data
-  // HttpClient http;
+// send json data
+String sendData(String data1, String data2, String data3, String data4, String data5)
+{
   String json;
   StaticJsonBuffer<200> jsonBuffer;
   JsonObject &root = jsonBuffer.createObject();
@@ -83,14 +84,13 @@ String postt(String data1, String data2, String data3, String data4, String data
   root["Longitude"] = data4;
   root["Fall"] = data5;
   root.printTo(json);
-  //serializeJsonPretty(root, a);
-  return json;
 
-  //serializeJson(root, Serial);
+  return json;
 }
 
+//funciton to scan the I2C data bus and get the sensors adresses
 void checkI2C()
-{ //funciton to scan the I2C data bus and get the sensors adresses
+{
   byte error, address;
   int nDevices;
   Serial.println("Scanning...");
@@ -129,6 +129,7 @@ void checkI2C()
   }
 }
 
+//initialize MPU6050 sensor
 void initMPU6050()
 {
   Wire.begin();
@@ -153,9 +154,9 @@ void mpu_read()
   rawGyroZ = Wire.read() << 8 | Wire.read(); // 0x47 (GYRO_ZOUT_H) & 0x48 (GYRO_ZOUT_L)
 }
 
+//fall detection function
 boolean mpuFallDetection()
 {
-
   mpu_read(); //set accelerometer domain +-2g => using 14 bits  //set gyroscope domain 250grades/s => 131.07
 
   //accelerometer and gryoscope processed data each for 3 axis
@@ -166,18 +167,11 @@ boolean mpuFallDetection()
   gy = (rawGyroY - 351) / 131.07;
   gz = (rawGyroZ + 136) / 131.07;
 
-  // if (checkFall == true)
-  // {
-  //   while (millis() - softTimer < 10000)
-  //   {
-  //   }
-  // }
-
   if (checkFall)
   {
-    
     checkFall = false;
-    
+
+    //reinitialize & read MPU6050 sensor
     initMPU6050();
     mpu_read();
     ax = (rawAccX - 2050) / 16384.00;
@@ -186,7 +180,7 @@ boolean mpuFallDetection()
     gx = (rawGyroX + 270) / 131.07;
     gy = (rawGyroY - 351) / 131.07;
     gz = (rawGyroZ + 136) / 131.07;
-    
+
     while (millis() - softTimer < 10000)
     {
     }
@@ -195,12 +189,13 @@ boolean mpuFallDetection()
   if (ax <= 0.3 && ay <= 0.2)
   {                       //if acceleration breaks lower threshold  //1.1
     softTimer = millis(); //start counter
-    checkFall = true;     //FALL DETECTED for 5 seconds
+    checkFall = true;     //FALL DETECTED for 10 seconds
   }
 
   return checkFall;
 }
 
+//gps data function
 void sendGpsData()
 {
   if (SerialGPS.available())
@@ -210,40 +205,47 @@ void sendGpsData()
     if (gps.location.isUpdated())
     {
       //Serial.print("Latitude= ");
-      // Serial.print(gps.location.lat(), 6);
-      //  Serial.print(" Longitude= ");
-      //  Serial.println(gps.location.lng(), 6);
+      //Serial.print(gps.location.lat(), 6);
+      //Serial.print(" Longitude= ");
+      //Serial.println(gps.location.lng(), 6);
     }
   }
 }
 
+//setup function
 void setup()
 {
-  //delay(5000);
-  pinMode(blinkPin, OUTPUT); // pin that will blink to your heartbeat!
+  //pin that will blink to your heartbeat!
+  pinMode(blinkPin, OUTPUT);
 
+  //serial baudrate
   Serial.begin(9600);
-  // delay(5000);
-  SerialGPS.begin(9600, SERIAL_8N1, RXD0, TXD0); //gps baud
+  //gps baudrate
+  SerialGPS.begin(9600, SERIAL_8N1, RXD0, TXD0);
 
   //Serial.println("Serial Tx is on pin: " + String(TX));
   //Serial.println("Serial Rx is on pin: " + String(RX));
-  // rprocess.memory();
-  mlx.begin();
-  mlx.writeEmissivity(0.98); // set skin emissivity
 
+  //initialize temperature sensor
+  mlx.begin();
+  // set temperature sensor's skin emissivity
+  mlx.writeEmissivity(0.98);
+
+  //initialize MPU6050 sensor
   initMPU6050();
   //checkI2C();
   connectToWiFi();
-  interruptSetup(); // sets up to read Pulse Sensor signal every 2mS
+
+  // sets up to read Pulse Sensor signal every 2mS
+  interruptSetup();
 }
 
 void loop()
 {
-  delay(500); //500
+  //500ms delay
+  delay(500);
+  //read gps data
   sendGpsData();
-  //Serial.println(checkFall);
-  //Serial.println(mpuFallDetection());
-  //Serial.println(requestFormat(String(BPM), String(mlx.readObjectTempC()), String(gps.location.lat(), 6), String(gps.location.lng(), 6), String(mpuFallDetection())));
-  Serial.println(postt(String(BPM), String(mlx.readObjectTempC()) + " °C", String(gps.location.lat(), 6), String(gps.location.lng(), 6), String(mpuFallDetection())));
+  //display sensors data
+  Serial.println(sendData(String(BPM), String(mlx.readObjectTempC()) + " °C", String(gps.location.lat(), 6), String(gps.location.lng(), 6), String(mpuFallDetection())));
 }

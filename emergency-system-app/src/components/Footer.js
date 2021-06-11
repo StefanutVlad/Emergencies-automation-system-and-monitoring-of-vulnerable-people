@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./Footer.scss";
+//import "./Footer.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebook,
@@ -13,16 +13,16 @@ const Footer = () => {
   return (
     <footer className="footer pt-5 mt-5">
       <hr className="horizontal dark mb-5" />
-      <div className="container">
-        <div className="row">
-          <div className="col-md-4 mb-4">
+      <div className="container-footer">
+        <div className="row justify-content-center">
+          <div className="col-md-8 mb-3">
             <div>
-              <h6 className="text-gradient text-footer footer-font-weight-bolder">
+              <h2 className="text-gradient text-footer footer-font-weight-bolder">
                 Emergency System
-              </h6>
+              </h2>
             </div>
             <div>
-              <h6 className="mt-3 mb-2 opacity-8">Social</h6>
+              <h6 className="mt-3 mb-2 opacity-8 social-footer">Social</h6>
               <ul className="d-flex flex-row ms-n3 social">
                 <li className="social-item">
                   <Link to={"/"} className="social-link pe-1">
@@ -63,17 +63,17 @@ const Footer = () => {
               </ul>
             </div>
           </div>
-          <div className="col-md-1 col-sm-12 col-6 mb-2 text-center ">
-            <div>
+          <div className="row justify-content-center">
+            {/* <div>
               <h6 className="text-white footer-text text-center">Company</h6>
-            </div>
+            </div> */}
 
-            <div className="a-footer-section a-spacing-small a-text-center a-size">
+            <div className="row-md-3 mb-3">
               <span className="auth-footer-seperator"></span>
-              <div className="mt-2">
+              <div className="d-flex flex-row social">
                 <Link
                   to={"/help/user/ConditionsOfUse"}
-                  className="text-white footer_link pe-3"
+                  className="text-white footer-link "
                 >
                   Conditions of Use
                 </Link>
@@ -81,7 +81,7 @@ const Footer = () => {
 
                 <Link
                   to={"/help/user/PrivacyNotice"}
-                  className="text-white footer_link pe-3"
+                  className="text-white footer-link "
                 >
                   Privacy Notice
                 </Link>
@@ -90,7 +90,7 @@ const Footer = () => {
 
                 <Link
                   to={"/help/user/CookiesNotice"}
-                  className="text-white footer_link pe-3"
+                  className="text-white footer-link "
                 >
                   Cookies Notice
                 </Link>

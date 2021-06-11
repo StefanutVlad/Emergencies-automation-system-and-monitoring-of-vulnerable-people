@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import useGeoLocation from "../useGeoLocation";
-import "./ShowData.scss";
+//import "./ShowData.scss";
 
 const ShowData = ({ sensorsData }) => {
   const { user: currentUser } = useSelector((state) => state.AuthReducer);

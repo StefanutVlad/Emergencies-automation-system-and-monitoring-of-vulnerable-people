@@ -7,7 +7,7 @@ import CheckButton from "react-validation/build/button";
 
 import { isEmail } from "validator";
 import { rregister } from "../actions/auth";
-import "./Register.scss";
+//import "./Register.scss";
 
 const required = (value) => {
   if (!value) {
@@ -185,8 +185,12 @@ const Register = () => {
                 )}
               </div>
 
-              <div className="form-group">
-                <button className="btn btn-primary btn-block">Sign Up</button>
+              <div className="row d-flex justify-content-center">
+                <div className="row form-group">
+                  <button className="register-sign-up btn btn-primary btn-block ">
+                    Sign Up
+                  </button>
+                </div>
               </div>
             </div>
           )}

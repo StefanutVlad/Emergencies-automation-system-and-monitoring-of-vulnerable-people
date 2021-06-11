@@ -7,7 +7,7 @@ import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 
 import { login } from "../actions/auth";
-import "./Login.scss";
+//import "./Login.scss";
 
 const required = (value) => {
   if (!value) {
@@ -108,12 +108,18 @@ const Login = (props) => {
             />
           </div>
 
-          <button className="btn btn-primary btn-block" disabled={loading}>
-            {loading && (
-              <span className="spinner-border spinner-border-sm"></span>
-            )}{" "}
-            Sign In
-          </button>
+          <div className="row d-flex justify-content-center">
+          <div className="sign-in-button-reg">
+            <button className="btn btn-primary btn-block" disabled={loading}>
+              
+                {loading && (
+                  <span className="spinner-border spinner-border-sm"></span>
+                )}{" "}
+                Sign In
+              
+            </button>
+            </div>
+          </div>
 
           {message && (
             <div className="form-group">

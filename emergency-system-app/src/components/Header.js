@@ -4,13 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../actions/auth";
 import { clearMessage } from "../actions/message";
 import { history } from "../helpers/history";
-import "./Header.scss";
+//import "./Header.scss";
 
 const Header = ({ sensorsData }) => {
   //hooks
   const [showModeratorBoard, setShowModeratorBoard] = useState(false);
   const [showAdminBoard, setShowAdminBoard] = useState(false);
 
+  const { isLoggedIn } = useSelector((state) => state.AuthReducer);
   const { user: currentUser } = useSelector((state) => state.AuthReducer);
   const dispatch = useDispatch();
 
@@ -34,13 +35,13 @@ const Header = ({ sensorsData }) => {
   return (
     <div className="presentation-page">
       <div className="container position-sticky z-index-sticky col-12">
-        <nav className="navbar navbar-expand-lg  blur blur-rounded top-0 z-index-fixed shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
+        <nav className="margin-left-right navbar navbar-expand-lg  blur blur-rounded top-0 z-index-fixed shadow position-absolute my-3 py-2 start-0 end-0 mx-4 ">
           <div className="container-fluid">
             <Link
               to={"/"}
               className="text-gradient text-nav-primary font-weight-bolder ms-sm-3 "
             >
-              Emergency system
+              Emergency System
             </Link>
 
             <button
@@ -60,42 +61,28 @@ const Header = ({ sensorsData }) => {
             </button>
 
             <div
-              className="collapse navbar-collapse pt-3 pb-2 py-lg-0 w-100 "
+              className="navbar-collapse pt-2 pb-2 py-lg-0 collapse"
               id="navigation"
             >
               <ul className="navbar-nav navbar-nav-hover ps-lg-5 w-100 ">
-                <div className="nana ">
-                  <li className="nav-item mx-2">
-                    <Link to={"/home"} className="nav-link text-decoration">
-                      Home
-                    </Link>
-                  </li>
-                </div>
+                <li className="nav-item mx-2">
+                  <Link to={"/home"} className="nav-link">
+                    Home
+                  </Link>
+                </li>
 
                 {currentUser ? (
-                  <div className=" container">
-                    <div className="nana">
+                  <div className="navbar-collapse">
+                    <div className="navbar-nav-hover">
                       {currentUser.roles == "ROLE_USER" ? (
                         <li className="nav-item-user mx-2">
-                          <Link
-                            to={"/user"}
-                            className="nav-link"
-                            // id="dropdownMenuPages"
-                            // data-bs-toggle="dropdown"
-                            // aria-expanded="false"
-                          >
+                          <Link to={"/user"} className="nav-link">
                             {currentUser.username} Profile
                           </Link>
                         </li>
                       ) : (
-                        <li className="nav-item-admin mx-2">
-                          <Link
-                            to={"/user"}
-                            className="nav-link"
-                            // id="dropdownMenuPages"
-                            // data-bs-toggle="dropdown"
-                            // aria-expanded="false"
-                          >
+                        <li className="nav-item-admin  mx-2">
+                          <Link to={"/user"} className="nav-link ">
                             {currentUser.username} Profile
                           </Link>
                         </li>
@@ -110,21 +97,21 @@ const Header = ({ sensorsData }) => {
                       )}
 
                       {showAdminBoard && (
-                        <li className="nav-item mx-2 ">
-                          <Link to={"/admin"} className="nav-link">
+                        <li className="nav-item-admin-board mx-2">
+                          <Link to={"/admin"} className="nav-link ">
                             Admin Board
                           </Link>
                         </li>
                       )}
                     </div>
 
-                    <div className="navbar-nav ml-auto ">
-                      <li className="nav-item mx-2">
+                    <div className="navbar-nav ms-lg-auto">
+                      <li className="nav-item ms-lg-auto mx-2">
                         <Link to={"/profile"} className="nav-link">
                           {currentUser.username}
                         </Link>
                       </li>
-                      <li className="nav-item ms-3 ms-lg-0">
+                      <li className="nav-item ms-lg-auto mx-2">
                         <a href="/login" className="nav-link" onClick={logOut}>
                           LogOut
                         </a>
@@ -132,8 +119,8 @@ const Header = ({ sensorsData }) => {
                     </div>
                   </div>
                 ) : (
-                  <div className="navbar-nav ml-auto ">
-                    <li className="nav-item">
+                  <div className="nav-item ms-lg-auto mx-2">
+                    <li>
                       <Link to={"/login"} className="nav-link">
                         Login
                       </Link>
@@ -147,22 +134,28 @@ const Header = ({ sensorsData }) => {
       </div>
 
       <header className="bg-gradient-dark">
-        <div className="a page-header section-height-75">
+        <div className="page-header section-height-75">
           <span className="mask bg-gradient-info opacity-8 bg"></span>
           <div className="container">
             <div className="row justify-content-center">
-              <div className="col-lg-8 text-center mx-auto my-auto">
-                <h1 className="text-white">Emergency System</h1>
+              <div className="col-lg-8 text-center mx-auto my-auto mt-5">
+                <h4 className="h1 text-white">Emergency System</h4>
                 <p className="lead mb-4 text-white opacity-8">
                   Emergencies automation system and monitoring of vulnerable
                   people
                 </p>
-                <button
-                  type="submit"
-                  className="btn-account bg-white text-dark"
-                >
-                  <Link to={"/register"}>Create Account</Link>
-                </button>
+
+                {!isLoggedIn ? (
+                  <button type="submit" className="btn-account text-dark">
+                    <Link to={"/register"} className="btn-texxt">
+                      Create Account
+                    </Link>
+                  </button>
+                ) : (
+                  <h4 className="text-white">
+                    Welcome, {currentUser.username}{" "}
+                  </h4>
+                )}
               </div>
             </div>
           </div>
