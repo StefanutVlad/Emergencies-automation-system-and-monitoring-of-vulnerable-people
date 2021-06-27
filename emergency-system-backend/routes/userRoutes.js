@@ -31,23 +31,28 @@ const userRoutes = (router) => {
       if (err) {
         res.status(500).send(err);
       } else {
-        res.status(200).send(data); //success status response
+        //success status response
+        res.status(200).send(data);
       }
     });
   });
 
   router.get("/api/test/all", controller.allAccess);
 
-  router.get("/api/test/user", [authJwt.verifyToken], controller.userBoard);
+  router.get(
+    "/api/test/userBoard",
+    [authJwt.verifyToken],
+    controller.userBoard
+  );
 
   router.get(
-    "/api/test/mod",
+    "/api/test/modBoard",
     [authJwt.verifyToken, authJwt.isModerator],
     controller.moderatorBoard
   );
 
   router.get(
-    "/api/test/admin",
+    "/api/test/adminPannel",
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.adminBoard
   );

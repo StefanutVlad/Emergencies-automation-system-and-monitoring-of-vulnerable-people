@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import UserService from "../services/UserService";
-//import "./BoardUser.scss";
 
-const BoardUser = () => {
+const BoardUser = ({ currentUser }) => {
   //hooks
   const [content, setContent] = useState("");
-  const { user: currentUser } = useSelector((state) => state.AuthReducer);
 
   useEffect(() => {
     UserService.getUserBoard().then(

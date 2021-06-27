@@ -6,7 +6,6 @@ import CountUp from "react-countup";
 import TiltCard from "./TiltCard";
 import axios from "../axios";
 import "bootstrap/dist/js/bootstrap.bundle.min";
-//import "./Home.scss";
 
 const Home = ({ sensorsData }) => {
   //hooks
@@ -452,8 +451,8 @@ const Home = ({ sensorsData }) => {
                         </Link>
                       ) : (
                         <Link
-                          to={"/user"}
-                          className="text-white btn-card btn-outline-white mt-5 up btn-round"
+                          to={`/${currentUser.username}Board`}
+                          className="text-white btn-card btn-outline-white btn-round mt-5 up "
                         >
                           {" "}
                           Welcome, {currentUser.username}

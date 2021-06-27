@@ -1,5 +1,4 @@
-//message.js for response message from server
-
+//message.js - response message from server
 //This Redux action creator is for actions related to messages (notifications) from APIs.
 
 import { SET_MESSAGE, CLEAR_MESSAGE } from "./types";

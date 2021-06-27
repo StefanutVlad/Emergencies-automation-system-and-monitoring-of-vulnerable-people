@@ -1,5 +1,4 @@
 import React from "react";
-//import "./sass/components/help/ConditionsOfUse.scss";
 
 const ConditionsOfUse = () => {
   return (

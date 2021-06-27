@@ -3,9 +3,6 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import store from "./store";
 import reportWebVitals from "./reportWebVitals";
-// import { StateProvider } from "./StateProvider";
-// import reducer, { initialState } from "./reducer";
-
 import "./sass/index.scss";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";

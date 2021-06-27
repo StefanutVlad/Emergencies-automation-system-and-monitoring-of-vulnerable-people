@@ -54,8 +54,6 @@ const port = new SerialPort("COM5", {
 const parser = new Readline("\r\n");
 port.pipe(parser);
 
-//const port = process.env.PORT || 3000;
-//const port = io("192.168.1.103:1337");
 const connection_url = process.env.MONGO_URI;
 
 const Role = db.role;

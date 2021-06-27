@@ -21,21 +21,11 @@ const authenticationRoutes = (router) => {
 
     Users.create(dbData, (err, data) => {
       if (err) {
-        res.status(500).send(err); //internal server error
+        //internal server error
+        res.status(500).send(err);
       } else {
-        res.status(201).send(data); //data created successfully
-      }
-    });
-  });
-
-  router.post("/aa", (req, res) => {
-    const dbData = req.body;
-
-    Users.create(dbData, (err, data) => {
-      if (err) {
-        res.status(500).send(err); //internal server error
-      } else {
-        res.status(201).send(data); //data created successfully
+        //data created successfully
+        res.status(201).send(data);
       }
     });
   });
@@ -51,4 +41,5 @@ const authenticationRoutes = (router) => {
 
   router.post("/api/auth/signin", controller.signin);
 };
+
 export default authenticationRoutes;
