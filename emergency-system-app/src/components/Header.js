@@ -4,20 +4,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../actions/auth";
 import { clearMessage } from "../actions/message";
 import { history } from "../helpers/history";
-//import "./Header.scss";
 
-const Header = ({ sensorsData }) => {
+const Header = ({ currentUser, sensorsData }) => {
   //hooks
   const [showModeratorBoard, setShowModeratorBoard] = useState(false);
   const [showAdminBoard, setShowAdminBoard] = useState(false);
 
   const { isLoggedIn } = useSelector((state) => state.AuthReducer);
-  const { user: currentUser } = useSelector((state) => state.AuthReducer);
+  //const { user: currentUser } = useSelector((state) => state.AuthReducer);
   const dispatch = useDispatch();
 
   useEffect(() => {
     history.listen((location) => {
-      dispatch(clearMessage()); // clear message when changing location
+      // clear message when changing location
+      dispatch(clearMessage());
     });
   }, [dispatch]);
 
@@ -76,21 +76,27 @@ const Header = ({ sensorsData }) => {
                     <div className="navbar-nav-hover">
                       {currentUser.roles == "ROLE_USER" ? (
                         <li className="nav-item-user mx-2">
-                          <Link to={"/user"} className="nav-link">
-                            {currentUser.username} Profile
+                          <Link
+                            to={`/${currentUser.username}Board`}
+                            className="nav-link"
+                          >
+                            {currentUser.username} Board
                           </Link>
                         </li>
                       ) : (
                         <li className="nav-item-admin  mx-2">
-                          <Link to={"/user"} className="nav-link ">
-                            {currentUser.username} Profile
+                          <Link
+                            to={`/${currentUser.username}Board`}
+                            className="nav-link "
+                          >
+                            {currentUser.username} Board
                           </Link>
                         </li>
                       )}
 
                       {showModeratorBoard && (
                         <li className="nav-item mx-2">
-                          <Link to={"/mod"} className="nav-link">
+                          <Link to={"/modBoard"} className="nav-link">
                             Moderator Board
                           </Link>
                         </li>
@@ -98,8 +104,8 @@ const Header = ({ sensorsData }) => {
 
                       {showAdminBoard && (
                         <li className="nav-item-admin-board mx-2">
-                          <Link to={"/admin"} className="nav-link ">
-                            Admin Board
+                          <Link to={"/adminPannel"} className="nav-link ">
+                            Admin Pannel
                           </Link>
                         </li>
                       )}

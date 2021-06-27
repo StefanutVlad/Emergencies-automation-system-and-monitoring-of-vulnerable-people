@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-//import "./Footer.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebook,
@@ -64,10 +63,6 @@ const Footer = () => {
             </div>
           </div>
           <div className="row justify-content-center">
-            {/* <div>
-              <h6 className="text-white footer-text text-center">Company</h6>
-            </div> */}
-
             <div className="row-md-3 mb-3">
               <span className="auth-footer-seperator"></span>
               <div className="d-flex flex-row social">
@@ -104,7 +99,7 @@ const Footer = () => {
               <p className="my-4 text-white text-sm">
                 All rights reserved. Copyright ©
                 <script>document.write(new Date().getFullYear())</script>2021
-                Emergency System by Vlad Antonio Stefanut.
+                Emergency System by Vlad Antonio Ștefănuț.
               </p>
             </div>
           </div>

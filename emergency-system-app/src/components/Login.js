@@ -1,13 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
-
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
-
 import { login } from "../actions/auth";
-//import "./Login.scss";
 
 const required = (value) => {
   if (!value) {
@@ -28,7 +25,6 @@ const Login = (props) => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  //selector???
   const { isLoggedIn } = useSelector((state) => state.AuthReducer);
   const { message } = useSelector((state) => state.MessageReducer);
 
@@ -53,13 +49,15 @@ const Login = (props) => {
   };
 
   const handleLogin = (e) => {
-    e.preventDefault(); //event prevents refreshing the page
+    //event prevents refreshing the page
+    e.preventDefault();
 
     setLoading(true);
     form.current.validateAll();
 
     if (checkBtn.current.context._errors.length === 0) {
-      dispatch(login(username, password)) // dispatch login action(auth.js) to Redux Thunk Middleware
+      // dispatch login action(auth.js) to Redux Thunk Middleware
+      dispatch(login(username, password))
         .then(() => {
           if (mountedRef.current) {
             setLoading(false);
@@ -76,7 +74,7 @@ const Login = (props) => {
   };
 
   if (isLoggedIn) {
-    return <Redirect to="/user" />;
+    return <Redirect to="/" />;
   }
 
   return (
@@ -109,15 +107,13 @@ const Login = (props) => {
           </div>
 
           <div className="row d-flex justify-content-center">
-          <div className="sign-in-button-reg">
-            <button className="btn btn-primary btn-block" disabled={loading}>
-              
+            <div className="sign-in-button-reg">
+              <button className="btn btn-primary btn-block" disabled={loading}>
                 {loading && (
                   <span className="spinner-border spinner-border-sm"></span>
                 )}{" "}
                 Sign In
-              
-            </button>
+              </button>
             </div>
           </div>
 
@@ -134,20 +130,13 @@ const Login = (props) => {
         <div className="a-divider a-divider-break">
           <h5>New to Emergency System?</h5>
         </div>
-        {/* <button className="login__registerButton"> */}
-        {/* <nav className="navbar navbar-expand navbar-dark bg-dark">
-          <div className="navbar-nav mr-auto"> */}
         <button className="btn btn-dark btn-block  mr-auto  ">
-          {/* onClick={register} */}
-
           <Link to={"/register"} className="register_link">
             <li className="register_text">
               Create your Emergency system Account
             </li>
           </Link>
         </button>
-        {/* </div> */}
-        {/* </nav> */}
         <p>
           By signing-in you agree to Emergency system's Conditions of Use.
           Please see out Privacy Notice and our Cookies Notice.

@@ -1,5 +1,4 @@
 import React from "react";
-//import "./UserCard.scss";
 
 const UserCard = ({ id, username }) => {
   return (
@@ -10,7 +9,6 @@ const UserCard = ({ id, username }) => {
             #{id} {username}
           </strong>
         </p>
-        {/* <p></p> */}
       </div>
     </div>
   );

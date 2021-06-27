@@ -1,13 +1,11 @@
 import React, { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
-
 import { isEmail } from "validator";
 import { rregister } from "../actions/auth";
-//import "./Register.scss";
+
 
 const required = (value) => {
   if (!value) {
@@ -180,7 +178,7 @@ const Register = () => {
                 />
                 {isError && (
                   <div className="alert alert-danger" role="alert">
-                    " Passwords do not match."
+                    Passwords do not match.
                   </div>
                 )}
               </div>

@@ -7,7 +7,6 @@ import {
   DirectionsRenderer,
 } from "@react-google-maps/api";
 import useGeoLocation from "../useGeoLocation";
-//import "./Map.scss";
 
 const Map = ({ sensorsData }) => {
   //hooks
@@ -173,11 +172,11 @@ const Map = ({ sensorsData }) => {
         patientDuration &&
         totalDuration
       ) {
-        console.log(
-          "Distance & Duration have updated"
-          // patientDistance,
-          // patientDuration
-        );
+        // console.log(
+        //   "Distance & Duration have updated",
+        //    patientDistance,
+        //    patientDuration
+        // );
       }
     }
 
@@ -330,7 +329,7 @@ const Map = ({ sensorsData }) => {
         style={{ backgroundColor: markers ? "red" : null }}
         type="button"
         onClick={() => {
-          setToggle(!toggle);
+          setToggle(0);
           setCenter(romaniaCoords);
           setZoom(7);
           setMarkers();
@@ -345,12 +344,12 @@ const Map = ({ sensorsData }) => {
         CLEAR MAP
       </button>
       <br />
-      <h5>Current points of interest: {id}</h5>
+      <h6>Current points of interest: {id}</h6>
       <br />
-      <h5>Patient distance: {patientDistance} km</h5>
-      <h5>Total distance: {totalDistance} km</h5>
-      <h5>Patient Duration: {patientDuration} minutes</h5>
-      <h5>Total Duration: {totalDuration} minutes</h5>
+      <h6>Patient distance: {patientDistance} km</h6>
+      <h6>Total distance: {totalDistance} km</h6>
+      <h6>Patient Duration: {patientDuration} minutes</h6>
+      <h6>Total Duration: {totalDuration} minutes</h6>
     </div>
   );
 };

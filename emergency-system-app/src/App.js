@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Router, Switch, Route } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { history } from "./helpers/history";
 import io from "socket.io-client";
-
 import "bootstrap/dist/css/bootstrap.min.css";
-//import "./sass/App.scss";
-
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Home from "./components/Home";
@@ -23,6 +21,7 @@ import CookiesNotice from "./components/help/CookiesNotice";
 const App = () => {
   const [sensorsData, setUsersData] = useState([]);
   const socket = io.connect("http://localhost:3004");
+  const { user: currentUser } = useSelector((state) => state.AuthReducer);
 
   socket.on("connect", () => {
     if (socket.connected) {
@@ -32,7 +31,6 @@ const App = () => {
 
   useEffect(() => {
     socket.once("message", (newData) => {
-      // console.log("SensorData: " + newData.Temperature);
       setUsersData([sensorsData, newData]);
     });
   }, [sensorsData, socket]);
@@ -40,7 +38,7 @@ const App = () => {
 
   return (
     <Router history={history}>
-      <Header />
+      <Header currentUser={currentUser} />
 
       <Switch>
         <Route exact path={["/", "/home"]}>
@@ -53,20 +51,20 @@ const App = () => {
           <Register />
         </Route>
         <Route path="/profile">
-          <BoardUser />
+          <BoardUser currentUser={currentUser} />
         </Route>
 
-        <Route path="/user">
-          <Profile sensorsData={sensorsData}>
-            {/* <ShowData sensorsData="sensorsData" />
-              <Map /> */}
-          </Profile>
+        <Route path="/userBoard">
+          <Profile
+            currentUser={currentUser}
+            sensorsData={sensorsData}
+          ></Profile>
         </Route>
-        <Route path="/mod">
+        <Route path="/modBoard">
           <BoardModerator />
         </Route>
-        <Route path="/admin">
-          <BoardAdmin />
+        <Route path="/adminPannel">
+          <BoardAdmin currentUser={currentUser} />
         </Route>
         <Route path="/help/user/ConditionsOfUse">
           <ConditionsOfUse />

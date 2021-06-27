@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+//import { useSelector } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
 import UserService from "../services/UserService";
 import axios from "../axios";
 import UserCard from "./UserCard";
 //import "./BoardAdmin.scss";
 
-const BoardAdmin = () => {
+const BoardAdmin = ({ currentUser }) => {
   //hooks
   const [content, setContent] = useState("");
   const [users, setUsers] = useState([]);
-  const { user: currentUser } = useSelector((state) => state.AuthReducer);
+  //const { user: currentUser } = useSelector((state) => state.AuthReducer);
 
   //set AdminBoard content
   useEffect(() => {
@@ -54,7 +54,11 @@ const BoardAdmin = () => {
           <div>
             {users.map((user, i) => (
               <div key={i}>
-                <Link to={`/${user.username}`} className="linkkk">
+                <Link
+                  to={`/${user.username}Board`}
+                  currentuser={currentUser}
+                  className="linkkk"
+                >
                   <UserCard id={i} username={user.username} />
                 </Link>
               </div>

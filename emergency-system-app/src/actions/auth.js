@@ -1,13 +1,14 @@
-//auth.js for register & login
+//auth.js -> register & login
 
 //creator for actions related to authentication
 //We’re gonna import AuthService to make asynchronous HTTP requests with trigger one or more dispatch in the result.
 
-// – register()
+// – rregister()
 
 // calls the AuthService.register(username, email, password)
 // dispatch REGISTER_SUCCESS and SET_MESSAGE if successful
 // dispatch REGISTER_FAIL and SET_MESSAGE if failed
+
 // – login()
 
 // calls the AuthService.login(username, password)

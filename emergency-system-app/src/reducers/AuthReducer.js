@@ -3,7 +3,7 @@
 
 // src/reducers : 2 reducers. each reducer updates a different part of the state corresponding to dispatched Redux actions.
 
-//The Auth reducer will update the isLoggedIn and user state of the application.
+// The Auth reducer will update the isLoggedIn and user state of the application.
 
 import {
   REGISTER_SUCCESS,
