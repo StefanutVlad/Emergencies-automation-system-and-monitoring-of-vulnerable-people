@@ -3,7 +3,7 @@
   margin: auto;
   width: 55%;
   float: center;
-  height: 110vh;
+  height: 115vh;
   display: flex;
   flex-direction: column;
   padding: 0 20px;
@@ -24,8 +24,6 @@
   margin: 1px;
 }
 
-
-
 @media screen and (max-width: 768px) {
   .container-profile {
     width: 85%;
@@ -42,13 +40,13 @@
 
 @media screen and (max-width: 968px) {
   .container-profile {
-    height: 115vh !important;
+    height: 118vh !important;
   }
 }
 
 @media screen and (max-width: 1300px) {
   .container-profile {
-    height: 97vh !important;
+    height: 99vh !important;
   }
 }
 
