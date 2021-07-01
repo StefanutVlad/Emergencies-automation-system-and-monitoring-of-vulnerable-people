@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-//import { useSelector } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
 import UserService from "../services/UserService";
 import axios from "../axios";
 import UserCard from "./UserCard";
-//import "./BoardAdmin.scss";
+
 
 const BoardAdmin = ({ currentUser }) => {
   //hooks
@@ -54,11 +53,7 @@ const BoardAdmin = ({ currentUser }) => {
           <div>
             {users.map((user, i) => (
               <div key={i}>
-                <Link
-                  to={`/${user.username}Board`}
-                  currentuser={currentUser}
-                  className="linkkk"
-                >
+                <Link to={`/userBoard/${user.username}`} className="linkkk">
                   <UserCard id={i} username={user.username} />
                 </Link>
               </div>

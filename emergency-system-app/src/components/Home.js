@@ -7,13 +7,11 @@ import TiltCard from "./TiltCard";
 import axios from "../axios";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 
-const Home = ({ sensorsData }) => {
+const Home = ({ currentUser, sensorsData }) => {
   //hooks
   const [content, setContent] = useState("");
   const [usersNumber, setUsersNumber] = useState(0);
-
   const { isLoggedIn } = useSelector((state) => state.AuthReducer);
-  const { user: currentUser } = useSelector((state) => state.AuthReducer);
 
   var dbEntries = 0;
 
@@ -451,7 +449,7 @@ const Home = ({ sensorsData }) => {
                         </Link>
                       ) : (
                         <Link
-                          to={`/${currentUser.username}Board`}
+                          to={`/userBoard/${currentUser.username}`}
                           className="text-white btn-card btn-outline-white btn-round mt-5 up "
                         >
                           {" "}

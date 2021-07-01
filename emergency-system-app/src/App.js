@@ -42,7 +42,7 @@ const App = () => {
 
       <Switch>
         <Route exact path={["/", "/home"]}>
-          <Home sensorsData={sensorsData} />
+          <Home currentUser={currentUser} sensorsData={sensorsData} />
         </Route>
         <Route exact path="/login">
           <Login />
@@ -54,7 +54,7 @@ const App = () => {
           <BoardUser currentUser={currentUser} />
         </Route>
 
-        <Route path="/userBoard">
+        <Route path="/userBoard/:userId">
           <Profile
             currentUser={currentUser}
             sensorsData={sensorsData}

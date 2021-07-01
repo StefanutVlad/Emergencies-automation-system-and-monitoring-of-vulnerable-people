@@ -77,7 +77,7 @@ const Header = ({ currentUser, sensorsData }) => {
                       {currentUser.roles == "ROLE_USER" ? (
                         <li className="nav-item-user mx-2">
                           <Link
-                            to={`/${currentUser.username}Board`}
+                            to={`/userBoard/${currentUser.username}`}
                             className="nav-link"
                           >
                             {currentUser.username} Board
@@ -86,7 +86,7 @@ const Header = ({ currentUser, sensorsData }) => {
                       ) : (
                         <li className="nav-item-admin  mx-2">
                           <Link
-                            to={`/${currentUser.username}Board`}
+                            to={`/userBoard/${currentUser.username}`}
                             className="nav-link "
                           >
                             {currentUser.username} Board
@@ -119,7 +119,7 @@ const Header = ({ currentUser, sensorsData }) => {
                       </li>
                       <li className="nav-item ms-lg-auto mx-2">
                         <a href="/login" className="nav-link" onClick={logOut}>
-                          LogOut
+                          Log Out
                         </a>
                       </li>
                     </div>
