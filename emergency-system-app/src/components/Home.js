@@ -14,7 +14,6 @@ const Home = ({ currentUser, sensorsData }) => {
   const { isLoggedIn } = useSelector((state) => state.AuthReducer);
 
   var dbEntries = 0;
-
   const options = {
     scale: 1,
     speed: 1000,

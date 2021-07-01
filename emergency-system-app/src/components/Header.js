@@ -9,9 +9,7 @@ const Header = ({ currentUser, sensorsData }) => {
   //hooks
   const [showModeratorBoard, setShowModeratorBoard] = useState(false);
   const [showAdminBoard, setShowAdminBoard] = useState(false);
-
   const { isLoggedIn } = useSelector((state) => state.AuthReducer);
-  //const { user: currentUser } = useSelector((state) => state.AuthReducer);
   const dispatch = useDispatch();
 
   useEffect(() => {

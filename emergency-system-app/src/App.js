@@ -53,7 +53,6 @@ const App = () => {
         <Route path="/profile">
           <BoardUser currentUser={currentUser} />
         </Route>
-
         <Route path="/userBoard/:userId">
           <Profile
             currentUser={currentUser}

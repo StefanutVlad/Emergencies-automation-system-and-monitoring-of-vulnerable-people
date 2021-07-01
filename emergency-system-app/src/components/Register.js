@@ -6,7 +6,6 @@ import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
 import { rregister } from "../actions/auth";
 
-
 const required = (value) => {
   if (!value) {
     return (

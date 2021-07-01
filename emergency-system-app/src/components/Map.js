@@ -17,20 +17,17 @@ const Map = ({ sensorsData }) => {
   const onMapLoad = useCallback((map) => {
     mapRef.current = map;
   }, []);
+
+  //state hooks
   const [id, setId] = useState(0);
   const [markers, setMarkers] = useState({});
-
   const location = useGeoLocation();
-
   const [dir, setDir] = useState();
-
   const [patientDistance, setPatientDistance] = useState(0);
   const [totalDistance, setTotalDistance] = useState(0);
   const [patientDuration, setPatientDuration] = useState(0);
   const [totalDuration, setTotalDuration] = useState(0);
-
   const [toggle, setToggle] = useState(false);
-
   const [infoOpen, setInfoOpen] = useState(false);
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [zoom, setZoom] = useState(8);

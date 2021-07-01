@@ -4,12 +4,10 @@ import UserService from "../services/UserService";
 import axios from "../axios";
 import UserCard from "./UserCard";
 
-
 const BoardAdmin = ({ currentUser }) => {
   //hooks
   const [content, setContent] = useState("");
   const [users, setUsers] = useState([]);
-  //const { user: currentUser } = useSelector((state) => state.AuthReducer);
 
   //set AdminBoard content
   useEffect(() => {
