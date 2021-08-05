@@ -2,6 +2,7 @@
 
 // last 10 IBI values for average calculus
 volatile int rate[10];
+volatile int values[10];
 // average array flag so we startup with reasonable BPM
 volatile boolean firstBeat = true;
 // average array flag so we startup with reasonable BPM
@@ -42,7 +43,7 @@ int getPulse()
     Signal = analogRead(pulsePin);
     Signal = map(Signal, 0, 4095, 0, 1023);
 
-    // timer variable in mS
+    //timer variable in mS
     sampleCounter += 2;
     // monitor the time since the last beat to avoid noise
     int N = sampleCounter - lastBeatTime;
@@ -164,7 +165,7 @@ int getPulse()
         secondBeat = false;
     }
 
-    // after the BPM and IBI have been determined
+    // after the BPM and IBI have been determined 
     if (QS == true)
     {
         // Makes the LED Fade Effect Happen
@@ -184,6 +185,7 @@ void IRAM_ATTR isr()
 {
     // disable interrupts
     portENTER_CRITICAL_ISR(&intr);
+
     getPulse();
     // enable interrupts
     portEXIT_CRITICAL_ISR(&intr);
